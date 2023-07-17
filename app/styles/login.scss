@@ -5,11 +5,11 @@
 
     &__wrapper {
         inline-size: min(100%, 33.62469rem);    
-        block-size: 37.79406rem;
+        //block-size: 37.79406rem;
         border-radius: 1.625rem;
         border: 1px solid #D6D6D6;
         background: #FFF;
-        padding: 3.93rem 0 0 2.52rem;
+        padding: 3.93rem 2.52rem 2.34rem 2.52rem;
     }
 
     &__title {
@@ -37,14 +37,12 @@
         padding-inline-start: 1.64rem;
     }
 
-    &__input-password {
+    &__input-email {
         @extend .login__input-user;
     }
 
-    &__forgot {
-        color: #333;
-        font-size: 0.9375rem;
-        font-weight: 400;
+    &__input-password {
+        @extend .login__input-user;
     }
 
     &__button {
@@ -59,6 +57,7 @@
         font-size: 0.9375rem;
         font-weight: 400;
         text-align: center;
+        cursor: pointer;
     }
 
     &__forgot {
@@ -70,6 +69,7 @@
 
         >span{
             font-weight: bolder;
+            cursor: pointer;
         }
     }
 
