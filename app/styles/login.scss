@@ -15,10 +15,7 @@
         color: #000;    
         font-size: 2.1875rem;
         font-style: normal;
-        font-weight: 600;
-        line-height: normal;
-        
-        
+        font-weight: 600; 
     }
 
     &__subtitle {
@@ -28,6 +25,10 @@
         font-weight: 400;
         line-height: normal;
         margin-block-end: 2.93rem;
+    }
+
+    &__input-wrapper {
+        position: relative;
     }
 
     &__input-user {
@@ -42,6 +43,14 @@
 
     &__input-password {
         @extend .login__input-user;
+    }
+
+    &__error {
+        position: absolute;
+        inset-inline-start: 0px;
+        inset-block-end: 6px;
+        color: red;
+        font-size: 0.813rem;
     }
 
     &__button {

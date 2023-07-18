@@ -1,5 +1,5 @@
 import styles from "../styles/login.css";
-import { Form, Link } from "@remix-run/react";
+import { useActionData, Form, Link } from "@remix-run/react";
 import type { ActionArgs } from "@remix-run/node";
 import { redirect } from "@remix-run/node";
 import { z } from "zod";
@@ -10,7 +10,7 @@ export function links() {
 }
 
 const schema = z.object({
-  email: z.string().email({ message: "fornecer email valido" }),
+  email: z.string().email({ message: "insira um email valido" }),
   password: z.string().min(6, { message: "minimo de 6 caracteres" }).trim(),
 });
 
@@ -37,7 +37,7 @@ export async function action({ request }: ActionArgs) {
 
   const session = await getSession(request.headers.get("Cookie"));
   session.set("token", await token);
-  console.log(session.data);
+  //console.log(session.data);
 
   return redirect("/register", {
     headers: {
@@ -47,6 +47,9 @@ export async function action({ request }: ActionArgs) {
 }
 
 export default function Login() {
+  const data = useActionData();
+  console.log(data);
+
   return (
     <div className="login">
       <div className="login__wrapper">
@@ -54,12 +57,16 @@ export default function Login() {
         <h3 className="login__subtitle">Bem vindo</h3>
 
         <Form method="POST">
-          <input
-            className="login__input-user"
-            placeholder="Email"
-            id="user"
-            name="email"
-          />
+          <div className="login__input-wrapper">
+            <input
+              className="login__input-user"
+              placeholder="Email"
+              id="user"
+              name="email"
+            />
+            {data?.error?.issues.some((item: any) => item.path.includes("email")) ? <span className="login__error">Insira um email valido</span> : null}
+          </div>
+          <div className="login__input-wrapper">
           <input
             className="login__input-email"
             type="password"
@@ -67,7 +74,9 @@ export default function Login() {
             id="pass"
             name="password"
           />
-
+          {data?.error?.issues.some((item: any) => item.path.includes("password") ) ? <span className="login__error">A senha deve possuir no minimo 6 letras</span> : null}
+          {/* <span className="login__error">Error</span> */}
+          </div>
           <button className="login__button">Continue</button>
         </Form>
 
