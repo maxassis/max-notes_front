@@ -5,7 +5,6 @@
 
     &__wrapper {
         inline-size: min(100%, 33.62469rem);    
-        //block-size: 37.79406rem;
         border-radius: 1.625rem;
         border: 1px solid #D6D6D6;
         background: #FFF;
@@ -58,6 +57,11 @@
         font-weight: 400;
         text-align: center;
         cursor: pointer;
+        transition: background 0.2s ease-in-out;
+
+        &:hover {
+            background: darken(#0016DF, 8%);
+        }
     }
 
     &__forgot {
@@ -70,6 +74,26 @@
         >span{
             font-weight: bolder;
             cursor: pointer;
+        }
+    }
+
+    &__checkbox {
+        display: flex;
+        align-items: center;
+        gap: 0.7rem;
+
+        >input {
+            all: revert;
+            width: 1.34338rem;
+            height: 1.34338rem;
+            border-radius: 0.3125rem;
+            border: 1px solid #D6D6D6;
+        }
+
+        >span {
+            color: #333;
+            font-size: 0.9375rem;
+            font-weight: 400;
         }
     }
 
