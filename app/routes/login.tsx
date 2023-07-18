@@ -10,8 +10,8 @@ export function links() {
 }
 
 const schema = z.object({
-  email: z.string().email({ message: "insira um email valido" }),
-  password: z.string().min(6, { message: "minimo de 6 caracteres" }).trim(),
+  email: z.string().email(),
+  password: z.string().min(6).trim(),
 });
 
 export async function action({ request }: ActionArgs) {
@@ -75,7 +75,6 @@ export default function Login() {
             name="password"
           />
           {data?.error?.issues.some((item: any) => item.path.includes("password") ) ? <span className="login__error">A senha deve possuir no minimo 6 letras</span> : null}
-          {/* <span className="login__error">Error</span> */}
           </div>
           <button className="login__button">Continue</button>
         </Form>
