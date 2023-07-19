@@ -60,7 +60,7 @@ export default function Login() {
         <Form method="POST">
           <div className="login__input-wrapper">
             <input
-              className="login__input-user"
+              className="login__input-user input"
               type="text"
               placeholder="Username"
               name="name"
@@ -70,7 +70,7 @@ export default function Login() {
 
           <div className="login__input-wrapper">
             <input
-              className="login__input-email"
+              className="login__input-email input"
               placeholder="Email"
               name="email"
             />
@@ -79,7 +79,7 @@ export default function Login() {
 
           <div className="login__input-wrapper">
             <input
-              className="login__input-password"
+              className="login__input-password input"
               type="password"
               name="password"
               placeholder="Senha"

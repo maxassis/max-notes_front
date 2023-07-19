@@ -1,0 +1,34 @@
+.card {
+    display: flex;
+    inline-size: 13.13713rem;
+    padding: 1.33881rem 1.00413rem;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.66944rem;
+    border-radius: 0.50206rem;
+    border: 1.004px solid var(--yellow-out, rgba(149, 102, 20, 0.25));
+    background: var(--yellow, #FFAF22);
+
+    &__title {
+        color: #000;
+        font-size: 1.09863rem;
+        font-weight: 600;
+        line-height: 1.58688rem; 
+    }
+
+    &__content {
+        color: #000;
+        font-size: 0.97656rem;
+        font-weight: 400;
+        line-height: 1.46481rem;
+    }  
+    
+    &__date {
+        color: #000;
+        font-size: 0.79344rem;
+        font-style: italic;
+        font-weight: 400;
+        line-height: 1.28175rem;
+    }
+
+}

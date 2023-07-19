@@ -59,7 +59,7 @@ export default function Login() {
         <Form method="POST">
           <div className="login__input-wrapper">
             <input
-              className="login__input-user"
+              className="login__input-user input "
               placeholder="Email"
               id="user"
               name="email"
@@ -68,7 +68,7 @@ export default function Login() {
           </div>
           <div className="login__input-wrapper">
           <input
-            className="login__input-email"
+            className="login__input-email input"
             type="password"
             placeholder="Password"
             id="pass"
