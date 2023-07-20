@@ -1,4 +1,5 @@
 import styles from "../styles/show.css";
+import Card from "../components/card";
 
 export function links() {
   return [{ rel: "stylesheet", href: styles }];
@@ -14,11 +15,29 @@ export default function Show() {
             type="text"
             placeholder="Digite um titulo"
           />
-          <textarea className="search__textarea" placeholder="Crie uma nota..."></textarea>
+          <textarea
+            className="search__textarea"
+            placeholder="Crie uma nota..."
+          ></textarea>
           <div className="search__options">
             <span>salvar</span> <span>limpar</span>
           </div>
         </div>
+      </div>
+
+      <div className="show">
+        <Card />
+        <Card />
+        <Card />
+        <Card />
+        <Card />  
+        <Card /> 
+        <Card />
+        <Card />
+        <Card />
+        <Card />
+        <Card />  
+        <Card />   
       </div>
     </>
   );

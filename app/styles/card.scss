@@ -1,6 +1,7 @@
 .card {
     display: flex;
-    inline-size: 13.13713rem;
+    inline-size: 16.13713rem;
+    block-size: 15.300rem;
     padding: 1.33881rem 1.00413rem;
     flex-direction: column;
     align-items: flex-start;
@@ -21,6 +22,9 @@
         font-size: 0.97656rem;
         font-weight: 400;
         line-height: 1.46481rem;
+        block-size: 130px;
+        overflow: hidden;
+        
     }  
     
     &__date {

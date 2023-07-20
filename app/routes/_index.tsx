@@ -1,4 +1,5 @@
 import type { V2_MetaFunction } from "@remix-run/node";
+import { redirect } from "@remix-run/node";
 
 export const meta: V2_MetaFunction = () => {
   return [
@@ -7,10 +8,6 @@ export const meta: V2_MetaFunction = () => {
   ];
 };
 
-export default function Index() {
-  return (
-    <div style={{ fontFamily: "system-ui, sans-serif", lineHeight: "1.8" }}>
-      <h1>Welcome to Max Notes</h1>
-    </div>
-  );
-}
+export const loader = async () => {
+  return redirect("/login")    
+};

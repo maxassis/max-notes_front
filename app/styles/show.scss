@@ -2,6 +2,9 @@
   display: grid;
   place-items: center;
   padding-block: 1.25rem;
+  position: absolute;
+  inline-size: 100%;
+  z-index: 1;
 
   &__box {
     inline-size: min(100%, 37.5rem);
@@ -37,7 +40,10 @@
     transition: block-size 0.5s ease-in-out;
 
     &:focus {
-      block-size: 15rem;
+      block-size: 8rem;
+      .show {
+        background-color: red;
+      }
     }
 
     &::placeholder {
@@ -53,4 +59,19 @@
     align-items: center;
     padding-inline-start: 1rem;
   }
+}
+
+
+.show {
+  display: grid;
+  grid-template-rows: repeat(auto-fill, 250px);
+  grid-template-columns: repeat(auto-fill, minmax(19rem, 19rem));
+  block-size: calc(100% - 179px);
+  justify-items: center;
+  justify-content: center;
+  align-items: center;
+  row-gap: 20px;
+  overflow: scroll;
+  padding-block-end: 40px;
+  margin-block-start: 179px;
 }

@@ -39,7 +39,7 @@ export async function action({ request }: ActionArgs) {
   session.set("token", await token);
   //console.log(session.data);
 
-  return redirect("/register", {
+  return redirect("/notes/show", {
     headers: {
       "Set-Cookie": await commitSession(session),
     },
