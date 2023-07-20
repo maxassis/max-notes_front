@@ -1,5 +1,6 @@
 import type { V2_MetaFunction } from "@remix-run/node";
-import { redirect } from "@remix-run/node";
+import { LoaderArgs, redirect } from "@remix-run/node";
+import { getSession } from "~/session.server";
 
 export const meta: V2_MetaFunction = () => {
   return [
@@ -8,6 +9,13 @@ export const meta: V2_MetaFunction = () => {
   ];
 };
 
-export const loader = async () => {
-  return redirect("/login")    
-};
+
+export async function loader({request}: LoaderArgs) {
+  const session = await getSession(request.headers.get("Cookie"))
+  
+  if(!session.data.token) {
+      return redirect("/login")
+  }
+
+  return redirect("notes/show")
+}

@@ -4,11 +4,18 @@ export function links() {
     return [{ rel: "stylesheet", href: styles }];
   }
 
-export default function Card() {
+
+interface CardProps {
+    color: string;
+    title: string;
+    content: string;
+}
+
+export default function Card({ color, content, title }: CardProps) {
     return (
-        <div className="card">
-            <h2 className="card__title">teste</h2>
-            <p className="card__content">Lorem ipsum dolor sit amet consectetur adipisicing elit. Harum mollitia, iure inventore quos quia maxime. Ipsam fugiat saepe quia aliquam recusandae maiores, minus facere voluptas sequi? Aliquid quibusdam deserunt rerum.</p>
+        <div className="card" style={{ "--background": color } as React.CSSProperties} >
+            <h2 className="card__title">{title}</h2>
+            <p className="card__content">{content}</p>
             <span className="card__date">12.07.2023</span>
         </div>
 
