@@ -1,5 +1,5 @@
-import type { V2_MetaFunction } from "@remix-run/node";
-import { LoaderArgs, redirect } from "@remix-run/node";
+import type { V2_MetaFunction , LoaderArgs} from "@remix-run/node";
+import { redirect } from "@remix-run/node";
 import { getSession } from "~/session.server";
 
 export const meta: V2_MetaFunction = () => {

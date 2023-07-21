@@ -53,6 +53,14 @@
     }
   }
 
+  &__error {
+    inset-inline-start: 0px;
+    inset-block-end: 6px;
+    color: red;
+    font-size: 0.813rem;
+    padding-inline-start: 1rem;
+  }
+
   &__options {
     display: flex;
     block-size: 2.188rem;
@@ -63,6 +71,10 @@
     svg {
       cursor: pointer;
     }
+  }
+
+  &__save-button {
+    all: unset;
   }
 
   &__icons-wrapper {
