@@ -17,11 +17,11 @@ function date(dt: string): string {
     return dataFormatada
 }
 
-export default function Card({ color, content, title, created }: CardProps) {
+export default function Card({ color = "#fff", content, title, created }: CardProps) {
   return (
     <div
       className="card"
-      style={{ "--background": color } as React.CSSProperties}
+      style={{ "background": color }}  
     >
       <h2 className="card__title">{title}</h2>
       <p className="card__content">{content}</p>

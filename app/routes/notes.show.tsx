@@ -45,6 +45,7 @@ export const action = async ({ request }: ActionArgs) => {
 };
 
 interface Card {
+  color: string;
   id: number,
   title: string,
   content: string,
@@ -120,7 +121,8 @@ export default function Show() {
 
       <div className="show">
         {data.map((item, index) => {
-        return <Card color="" content={item.content} title={item.title} created={item.createdAt} key={index}/>
+          console.log(item)
+        return <Card color={item.color}  content={item.content} title={item.title} created={item.createdAt} key={index}/>
         })} 
       </div>
     </>
