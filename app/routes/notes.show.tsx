@@ -3,6 +3,7 @@ import Card from "../components/card";
 import { useState } from "react";
 import { useRouteLoaderData, Form, useActionData } from "@remix-run/react";
 import { redirect, type ActionArgs } from "@remix-run/node";
+import { getSession } from "~/session.server";
 import { z } from "zod";
 
 export function links() {
@@ -23,9 +24,15 @@ export const action = async ({ request }: ActionArgs) => {
     return schema.safeParse(data);
   }
 
+  const session = await getSession(request.headers.get("Cookie"))
+  const authorization = session.data.token
+  
   fetch("http://localhost:3333/posts/create", {
     method: "POST",
-    headers: { "Content-Type": "application/json" },
+    headers: { 
+      "Content-Type": "application/json",
+      "Authorization": "bearer " + authorization
+    },
     body: JSON.stringify({
       "title": data.title,
       "content": data.content,
