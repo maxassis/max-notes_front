@@ -1,14 +1,15 @@
 import styles from "../styles/show.css";
-import Card from "../components/card";
-import { useState } from "react";
+import Card, { links as cardStyle } from "../components/card";
+import { useState, useRef } from "react";
 import { Form, useActionData, useLoaderData } from "@remix-run/react";
 import { redirect } from "@remix-run/node";
 import type { LoaderArgs, ActionArgs } from "@remix-run/node";
 import { getSession } from "~/session.server";
+import type { Card as CardType } from "~/types";
 import { z } from "zod";
 
 export function links() {
-  return [{ rel: "stylesheet", href: styles }];
+  return [{ rel: "stylesheet", href: styles }, ...cardStyle()];
 }
 
 const schema = z.object({
@@ -56,31 +57,39 @@ export const action = async ({ request }: ActionArgs) => {
       color: data.color,
     }),
   }).then((response) => response.json());
-  //.then(() => () => redirect("/notes/show"))
+  //.then(() => (json) => console.log(json))
 
-  //  function teste() {
-  // return redirect("/notes/show")
-  // }
+  const res = await fetch("http://localhost:3333/posts", {
+    headers: { Authorization: "bearer " + authorization },
+  });
 
-  return null;
+  return await res.json();
 };
 
-interface Card {
-  color: string;
-  id: number;
-  title: string;
-  content: string;
-  createdAt: string;
-  updatedAt: string;
-  userId: number;
-}
-
+// interface Card {
+//   color: string;
+//   id: number;
+//   title: string;
+//   content: string;
+//   createdAt: string;
+//   updatedAt: string;
+//   userId: number;
+// }
+ 
 export default function Show() {
+  const modalRef = useRef<any>(null)
   const [showColor, setShowColor] = useState<boolean>(false);
   const [selectedColor, setSelectedColor] = useState<string>("#fff");
-
-  const data = useLoaderData() as Card[];
+  const data = useLoaderData() as CardType[];
   const req = useActionData();
+
+  function openModal() {
+    modalRef.current.showModal()
+  }
+
+  function closeModal() {
+    modalRef.current.close()
+  }
 
   return (
     <>
@@ -178,7 +187,10 @@ export default function Show() {
                 >
                   <div
                     className="search__single-color"
-                    style={{ backgroundColor: "#fff", border: "1px solid #d6d6d6" }}
+                    style={{
+                      backgroundColor: "#fff",
+                      border: "1px solid #d6d6d6",
+                    }}
                     onClick={() => setSelectedColor("#fff")}
                   ></div>
                   <div
@@ -239,16 +251,26 @@ export default function Show() {
         </div>
       </div>
 
+      <div className="modal">
+        <button className="modal__btn-open" onClick={openModal}>Open</button>
+        <dialog className="modal__dialog" ref={modalRef}>
+          <h1>Title</h1>
+          <p>Info</p>
+          <button onClick={closeModal}>Close</button>
+        </dialog>
+      </div>
+
       <div className="show">
         {data.map((item, index) => {
           return (
-            <Card
-              color={item.color}
-              content={item.content}
-              title={item.title}
-              created={item.createdAt}
-              key={index}
-            />
+              <Card
+                openModal={() => openModal()}
+                color={item.color}
+                content={item.content}
+                title={item.title}
+                created={item.createdAt}
+                key={index}
+              />
           );
         })}
       </div>

@@ -1,25 +1,21 @@
 import styles from "../styles/card.css";
+import type { CardProps } from "~/types";
 
 export function links() {
   return [{ rel: "stylesheet", href: styles }];
 }
 
-interface CardProps {
-  color: string;
-  title: string;
-  content: string;
-  created: string;
-}
-
-function date(dt: string): string {
+function date(dt: string ): string {
     let data = new Date(dt);
     let dataFormatada = ((data.getDate() )) + "/" + ((data.getMonth() + 1)) + "/" + data.getFullYear();
     return dataFormatada
 }
 
-export default function Card({ color = "#fff", content, title, created }: CardProps) {
+export default function Card({ color = "#fff", content, title, created, openModal }: CardProps) {
+  
   return (
     <div
+      onClick={() => openModal()}
       className="card"
       style={{ "background": color }}  
     >

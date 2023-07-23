@@ -125,7 +125,14 @@
   justify-content: center;
   align-items: center;
   row-gap: 20px;
-  overflow-y: scroll;
+  overflow-x: hidden;
   padding-block-end: 40px;
   margin-block-start: 179px;
+}
+
+.modal {
+
+  &__btn-open {
+    display: none;
+  }
 }
