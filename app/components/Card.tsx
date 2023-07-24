@@ -11,7 +11,7 @@ function date(dt: string ): string {
     return dataFormatada
 }
 
-export default function Card({ color = "#fff", content, title, created, openModal, id }: OpenModal) {
+export default function Card({ color, content, title, created, openModal, id }: OpenModal) {
   
   return (
     <div

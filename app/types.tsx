@@ -14,13 +14,6 @@ export interface CardProps {
   content: string;
   created: string;
   id: number;
-  // openModal?: ({
-  //   color,
-  //   content,
-  //   title,
-  //   created,
-  //   id
-  // }: CardProps) => void;
 }
 
 export interface OpenModal extends CardProps {

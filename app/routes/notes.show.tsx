@@ -86,26 +86,36 @@ export const action = async ({ request }: ActionArgs) => {
 };
  
 export default function Show() {
-  const modalRef = useRef<any>(null)
+  const modalRef = useRef<HTMLDialogElement>(null)
   const [showColor, setShowColor] = useState<boolean>(false);
   const [selectedColor, setSelectedColor] = useState<string>("#fff");
-  const [cardData, getCardData] = useState<CardProps>();
+  const [cardData, getCardData] = useState<Omit<CardProps, "created">>({ color: "#fff", content: "", title: "", id: 0 });
   const data = useLoaderData() as CardContent[];
   const req = useActionData();
 
+
   function openModal(dt: CardProps) {
-    getCardData(dt)
-    modalRef.current.showModal()
+    getCardData(dt) 
+    modalRef.current?.showModal()
   }
 
-  function closeModal() {
-    modalRef.current.close()
+  function closeModal(e: React.MouseEvent<HTMLDialogElement> ) {
+    const dialogDimensions = modalRef.current?.getBoundingClientRect() as DOMRect
+    //console.log(e)
+    if (
+      e.clientX < dialogDimensions?.left ||
+      e.clientX > dialogDimensions?.right ||
+      e.clientY < dialogDimensions?.top ||
+      e.clientY > dialogDimensions?.bottom
+  ) {
+    modalRef.current?.close()
+  }
   }
 
   return (
     <>
       <div className="search">
-        <div className="search__box" style={{ backgroundColor: selectedColor, borderColor: (selectedColor === "#fff" ? "#d6d6d6" : selectedColor) }}>
+        <div className="search__box" style={{ backgroundColor: selectedColor, borderColor: (selectedColor === "#fff" ? "#d6d6d6" : selectedColor)}}>
           <Form method="POST">
             <input
               className="search__input"
@@ -218,8 +228,7 @@ export default function Show() {
         </div>
       </div>
 
-      <div className="modal">
-        <dialog className="modal__dialog" ref={modalRef} style={{ backgroundColor: cardData?.color }}>
+        <dialog className="modal__dialog" ref={modalRef} style={{ backgroundColor: cardData?.color }} onClick={(e) => closeModal(e)} >
          <Form method="POST" name="edit" className="modal__form">
         
               <input
@@ -336,9 +345,8 @@ export default function Show() {
             </div>   
          </Form>
          
-          {/* <button onClick={closeModal}>Close</button> */}
+         
         </dialog>
-      </div>
 
       <div className="show">
         {data.map((item, index) => {

@@ -129,17 +129,16 @@
 }
 
 .modal {
-
   &__dialog {
     margin: auto;
     @extend .search__box;
     border: 0;
+    position: relative;
 
     &::backdrop {
       background-color: rgba(0, 0, 0, 0.5);
     }  
   }
-
 
   &__form {
     display: flex;
