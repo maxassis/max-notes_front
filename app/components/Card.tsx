@@ -1,5 +1,5 @@
 import styles from "../styles/card.css";
-import type { CardProps } from "~/types";
+import type { OpenModal } from "~/types";
 
 export function links() {
   return [{ rel: "stylesheet", href: styles }];
@@ -11,7 +11,7 @@ function date(dt: string ): string {
     return dataFormatada
 }
 
-export default function Card({ color = "#fff", content, title, created, openModal, id }: CardProps) {
+export default function Card({ color = "#fff", content, title, created, openModal, id }: OpenModal) {
   
   return (
     <div
