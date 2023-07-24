@@ -1,18 +1,24 @@
-export interface Card {
-    color: string;
-    id: number;
-    title: string;
-    content: string;
-    createdAt: string;
-    updatedAt: string;
-    userId: number;
-  }
+export interface CardContent {
+  color: string;
+  id: number;
+  title: string;
+  content: string;
+  createdAt: string;
+  updatedAt: string;
+  userId: number;
+}
 
-
-  export interface CardProps {
-    color: string;
-    title: string;
-    content: string;
-    created: string;
-    openModal: () => void;
-  }
+export interface CardProps {
+  color: string;
+  title: string;
+  content: string;
+  created: string;
+  id: number;
+  openModal: ({
+    color,
+    content,
+    title,
+    created,
+    id
+  }: Omit<CardProps, "openModal">) => void;
+}

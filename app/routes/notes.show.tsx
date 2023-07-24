@@ -1,11 +1,11 @@
 import styles from "../styles/show.css";
-import Card, { links as cardStyle } from "../components/card";
+import Card, { links as cardStyle } from "../components/Card";
 import { useState, useRef } from "react";
 import { Form, useActionData, useLoaderData } from "@remix-run/react";
 import { redirect } from "@remix-run/node";
 import type { LoaderArgs, ActionArgs } from "@remix-run/node";
 import { getSession } from "~/session.server";
-import type { Card as CardType } from "~/types";
+import type { CardContent, CardProps } from "~/types";
 import { z } from "zod";
 
 export function links() {
@@ -35,7 +35,7 @@ export async function loader({ request }: LoaderArgs) {
 
 export const action = async ({ request }: ActionArgs) => {
   const data = Object.fromEntries(await request.formData());
-  // console.log(data);
+  console.log(data);
 
   if (!schema.safeParse(data).success) {
     console.log("deu ruim");
@@ -45,6 +45,22 @@ export const action = async ({ request }: ActionArgs) => {
   const session = await getSession(request.headers.get("Cookie"));
   const authorization = session.data.token;
 
+  if(data.id) {
+    fetch("http://localhost:3333/posts/" + data.id, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "bearer " + authorization,
+      },
+      body: JSON.stringify({
+        title: data.title,
+        content: data.content,
+        color: data.color,
+      }),
+    }).then((response) => response.json())
+    .then((json) => () => console.log(json))
+  }
+  else {
   fetch("http://localhost:3333/posts/create", {
     method: "POST",
     headers: {
@@ -58,32 +74,26 @@ export const action = async ({ request }: ActionArgs) => {
     }),
   }).then((response) => response.json());
   //.then(() => (json) => console.log(json))
+  }
 
   const res = await fetch("http://localhost:3333/posts", {
     headers: { Authorization: "bearer " + authorization },
   });
+  
 
   return await res.json();
 };
-
-// interface Card {
-//   color: string;
-//   id: number;
-//   title: string;
-//   content: string;
-//   createdAt: string;
-//   updatedAt: string;
-//   userId: number;
-// }
  
 export default function Show() {
   const modalRef = useRef<any>(null)
   const [showColor, setShowColor] = useState<boolean>(false);
   const [selectedColor, setSelectedColor] = useState<string>("#fff");
-  const data = useLoaderData() as CardType[];
+  const [cardData, getCardData] = useState<CardProps>();
+  const data = useLoaderData() as CardContent[];
   const req = useActionData();
 
-  function openModal() {
+  function openModal(dt: CardProps) {
+    getCardData(dt)
     modalRef.current.showModal()
   }
 
@@ -252,10 +262,14 @@ export default function Show() {
       </div>
 
       <div className="modal">
-        <button className="modal__btn-open" onClick={openModal}>Open</button>
-        <dialog className="modal__dialog" ref={modalRef}>
-          <h1>Title</h1>
-          <p>Info</p>
+        <dialog className="modal__dialog" ref={modalRef} style={{ backgroundColor: cardData?.color }}>
+         <Form method="POST" name="edit">
+              <input name="title" defaultValue="teste edit" />
+              <input type="hidden" name="color" value="black" />
+              <input type="hidden" name="id" value={cardData?.id} />
+              <textarea name="content" defaultValue="teste edit"></textarea>
+              <button>Salvar</button>      
+         </Form>
           <button onClick={closeModal}>Close</button>
         </dialog>
       </div>
@@ -264,7 +278,8 @@ export default function Show() {
         {data.map((item, index) => {
           return (
               <Card
-                openModal={() => openModal()}
+                id={item.id}
+                openModal={openModal}
                 color={item.color}
                 content={item.content}
                 title={item.title}

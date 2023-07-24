@@ -132,6 +132,10 @@
 
 .modal {
 
+  &__dialog {
+    margin: auto;
+  }
+
   &__btn-open {
     display: none;
   }
