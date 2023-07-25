@@ -88,14 +88,15 @@ export const action = async ({ request }: ActionArgs) => {
 export default function Show() {
   const modalRef = useRef<HTMLDialogElement>(null)
   const [showColor, setShowColor] = useState<boolean>(false);
+ // const [showModalColor, setShowModalColor] = useState<boolean>(false);
   const [selectedColor, setSelectedColor] = useState<string>("#fff");
-  const [cardData, getCardData] = useState<Omit<CardProps, "created">>({ color: "#fff", content: "", title: "", id: 0 });
+  const [cardData, setCardData] = useState<Omit<CardProps, "created">>({ color: "#fff", content: "", title: "", id: 0 });
   const data = useLoaderData() as CardContent[];
   const req = useActionData();
 
 
   function openModal(dt: CardProps) {
-    getCardData(dt) 
+    setCardData(dt) 
     modalRef.current?.showModal()
   }
 
@@ -277,8 +278,8 @@ export default function Show() {
                 
                 <div
                   className={
-                    "search__colors-show " +
-                    (showColor && "search--open-colors")
+                    "modal__colors-show " +
+                    (showColor && "modal--open-colors")
                   }
                 >
                   <div
@@ -287,42 +288,42 @@ export default function Show() {
                       backgroundColor: "#fff",
                       border: "1px solid #d6d6d6",
                     }}
-                    onClick={() => setSelectedColor("#fff")}
+                    onClick={() => setCardData({...cardData,  color: "#fff" })}
                   ></div>
                   <div
                     className="search__single-color"
                     style={{ backgroundColor: "#FFAF22" }}
-                    onClick={() => setSelectedColor("#FFAF22")}
+                    onClick={() => setCardData({...cardData,  color: "#FFAF22" })}
                   ></div>
                   <div
                     className="search__single-color"
                     style={{ backgroundColor: "#9CD483" }}
-                    onClick={() => setSelectedColor("#9CD483")}
+                    onClick={() => setCardData({...cardData,  color: "#9CD483" })}
                   ></div>
                   <div
                     className="search__single-color"
                     style={{ backgroundColor: "#FC6016" }}
-                    onClick={() => setSelectedColor("#FC6016")}
+                    onClick={() => setCardData({...cardData,  color: "#FC6016" })}
                   ></div>
                   <div
                     className="search__single-color"
                     style={{ backgroundColor: "#9859FF" }}
-                    onClick={() => setSelectedColor("#9859FF")}
+                    onClick={() => setCardData({...cardData,  color: "#9859FF" })}
                   ></div>
                   <div
                     className="search__single-color"
                     style={{ backgroundColor: "#ADADAD" }}
-                    onClick={() => setSelectedColor("#ADADAD")}
+                    onClick={() => setCardData({...cardData,  color: "#ADADAD" })}
                   ></div>
                   <div
                     className="search__single-color"
                     style={{ backgroundColor: "#75C2F6" }}
-                    onClick={() => setSelectedColor("#75C2F6")}
+                    onClick={() => setCardData({...cardData,  color: "#75C2F6" })}
                   ></div>
                   <div
                     className="search__single-color"
                     style={{ backgroundColor: "#FF52A2" }}
-                    onClick={() => setSelectedColor("#FF52A2")}
+                    onClick={() => setCardData({...cardData,  color: "#FF52A2" })}
                   ></div>
                 </div>
               </div>
@@ -344,8 +345,7 @@ export default function Show() {
               </svg>
             </div>   
          </Form>
-         
-         
+                 
         </dialog>
 
       <div className="show">
