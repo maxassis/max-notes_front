@@ -88,7 +88,7 @@ export const action = async ({ request }: ActionArgs) => {
 export default function Show() {
   const modalRef = useRef<HTMLDialogElement>(null)
   const [showColor, setShowColor] = useState<boolean>(false);
- // const [showModalColor, setShowModalColor] = useState<boolean>(false);
+  const [showModalColor, setShowModalColor] = useState<boolean>(false);
   const [selectedColor, setSelectedColor] = useState<string>("#fff");
   const [cardData, setCardData] = useState<Omit<CardProps, "created">>({ color: "#fff", content: "", title: "", id: 0 });
   const data = useLoaderData() as CardContent[];
@@ -109,6 +109,7 @@ export default function Show() {
       e.clientY < dialogDimensions?.top ||
       e.clientY > dialogDimensions?.bottom
   ) {
+    setShowModalColor(false)
     modalRef.current?.close()
   }
   }
@@ -274,12 +275,12 @@ export default function Show() {
                   </svg>
                 </button>
 
-                <img src={Color} onClick={() => setShowColor(!showColor)} alt="colors" className="search__color-icon" />
+                <img src={Color} onClick={() => setShowModalColor(!showModalColor)} alt="colors" className="search__color-icon" />
                 
                 <div
                   className={
                     "modal__colors-show " +
-                    (showColor && "modal--open-colors")
+                    (showModalColor && "modal--open-colors")
                   }
                 >
                   <div
