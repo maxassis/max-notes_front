@@ -36,7 +36,7 @@ export async function loader({ request }: LoaderArgs) {
 
 export const action = async ({ request }: ActionArgs) => {
   const data = Object.fromEntries(await request.formData());
-  console.log(data);
+ // console.log(data);
 
   if (data.intent !== "delete" && !schema.safeParse(data).success) {
     console.log("deu ruim");
@@ -98,15 +98,15 @@ export const action = async ({ request }: ActionArgs) => {
  
 export default function Show() {
   const modalRef = useRef<HTMLDialogElement>(null)
+  const inputCreateRef = useRef<HTMLInputElement>(null)
+  const textAreaCreateRef = useRef<HTMLTextAreaElement>(null)
   const [showColor, setShowColor] = useState<boolean>(false);
   const [showModalColor, setShowModalColor] = useState<boolean>(false);
   const [selectedColor, setSelectedColor] = useState<string>("#fff");
   const [cardData, setCardData] = useState<Omit<CardProps, "created">>({ color: "#fff", content: "", title: "", id: 0 });
   const data = useLoaderData() as CardContent[];
   const req = useActionData();
-  //const fetcher = useFetcher();
-
-
+ 
   function openModal(dt: CardProps) {
     setCardData(dt) 
     modalRef.current?.showModal()
@@ -114,7 +114,6 @@ export default function Show() {
 
   function closeModal(e: React.MouseEvent<HTMLDialogElement> ) {
     const dialogDimensions = modalRef.current?.getBoundingClientRect() as DOMRect
-    //console.log(e)
     if (
       e.clientX < dialogDimensions?.left ||
       e.clientX > dialogDimensions?.right ||
@@ -126,10 +125,12 @@ export default function Show() {
   }
   }
 
-  // function deleteCard(id: number) {
-  //   fetcher.submit(null, {method: 'delete', action: `posts/${id}`})
+  function clearCreateInput(): void {
     
-  // }
+    textAreaCreateRef.current!.value = ""
+    setShowColor(false)
+    //inputCreateRef.current!.value = ""
+  }
 
   return (
     <>
@@ -141,6 +142,7 @@ export default function Show() {
               type="text"
               placeholder="Digite um titulo"
               name="title"
+              ref={inputCreateRef}
             />
             {req?.error?.issues.some((item: any) =>
               item.path.includes("title")
@@ -152,11 +154,12 @@ export default function Show() {
               className="search__textarea"
               placeholder="Crie uma nota..."
               name="content"
+              ref={textAreaCreateRef}
             ></textarea>
             <input type="hidden" name="color" value={selectedColor} />
             <div className="search__options">
               <div className="search__icons-wrapper">
-                <button className="search__save-button">
+                <button className="search__save-button" onClick={() => clearCreateInput()}>
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     width="15"
@@ -272,7 +275,6 @@ export default function Show() {
               <input type="hidden" name="color" value={cardData?.color} />
               <input type="hidden" name="id" value={cardData?.id} />
              
-
               <div className="search__options">
               <div className="search__icons-wrapper">
                 <button className="search__save-button">
@@ -369,12 +371,9 @@ export default function Show() {
               />
             </svg>
         </button> 
-        </Form>   
-
-
-
-                 
-        </dialog>
+        </Form>              
+        
+      </dialog>
 
       <div className="show">
         {data.map((item, index) => {

@@ -33,8 +33,12 @@ export async function action({ request }: ActionArgs) {
     }),
   })
     .then((r) => r.json())
-    .then((json) => json.accesstoken);
-
+    .then((json) => {
+      if(json.error) throw new Error("Email ou senha estão incorretos");
+      return json.accesstoken
+    })
+    //.catch(() => {throw new Error("Email or password is incorrect")});
+  
   const session = await getSession(request.headers.get("Cookie"));
   session.set("token", await token);
   //console.log(session.data);
@@ -46,10 +50,53 @@ export async function action({ request }: ActionArgs) {
   });
 }
 
+export function ErrorBoundary() {
+  const data = useActionData();
+  
+  return (
+    <div className="login">
+      <div className="login__wrapper">
+        <h2 className="login__title">Login</h2>
+        <h3 className="login__subtitle2">Bem vindo</h3>
+
+        <Form method="POST">
+          <div className="login__input-wrapper">
+          <span className="login__error-message">Email ou senha estão incorretos</span>
+            <input
+              className="login__input-user input "
+              placeholder="Email"
+              id="user"
+              name="email"
+            />
+            {data?.error?.issues.some((item: any) => item.path.includes("email")) ? <span className="login__error">Insira um email valido</span> : null}
+          </div>
+          <div className="login__input-wrapper">
+          <input
+            className="login__input-email input"
+            type="password"
+            placeholder="Password"
+            id="pass"
+            name="password"
+          />
+          {data?.error?.issues.some((item: any) => item.path.includes("password") ) ? <span className="login__error">A senha deve possuir no minimo 6 letras</span> : null}
+          </div>
+          <button className="login__button">Continue</button>
+        </Form>
+
+        <Link to="/register">
+          <h4 className="login__forgot">
+            Novo usuário ? <span>Registre-se</span>
+          </h4>
+        </Link>
+      </div>
+    </div>
+  );
+}
+
 export default function Login() {
   const data = useActionData();
  // console.log(data);
-
+ 
   return (
     <div className="login">
       <div className="login__wrapper">

@@ -15,39 +15,39 @@ const schema = z.object({
     password: z.string().min(6).trim(),
   });
 
-  export async function action({ request }: ActionArgs) {
-    const data = Object.fromEntries(await request.formData());
-    //console.log(data);
+  // export async function action({ request }: ActionArgs) {
+  //   const data = Object.fromEntries(await request.formData());
+  //   //console.log(data);
   
-    if (!schema.safeParse(data).success) {
-      console.log("deu ruim");
+  //   if (!schema.safeParse(data).success) {
+  //     console.log("deu ruim");
    
-      return schema.safeParse(data);
-    }
+  //     return schema.safeParse(data);
+  //   }
    
-    console.log("deu bom");
-    const token = fetch("http://localhost:3333/auth/register", {  
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        name: data.name as string,
-        email: data.email as string,
-        password: data.password as string,
-      }),
-    })
-      .then((r) => r.json())
-      .then((json) => json.accesstoken);
+  //   console.log("deu bom");
+  //   const token = fetch("http://localhost:3333/auth/register", {  
+  //     method: "POST",
+  //     headers: { "Content-Type": "application/json" },
+  //     body: JSON.stringify({
+  //       name: data.name as string,
+  //       email: data.email as string,
+  //       password: data.password as string,
+  //     }),
+  //   })
+  //     .then((r) => r.json())
+  //     .then((json) => json.accesstoken);
    
-    const session = await getSession(request.headers.get("Cookie"));
-    session.set("token", await token);
-    //console.log(session.data);
+  //   const session = await getSession(request.headers.get("Cookie"));
+  //   session.set("token", await token);
+  //   //console.log(session.data);
    
-    return redirect("/notes", {
-      headers: {
-        "Set-Cookie": await commitSession(session),
-      },
-    });
-  }
+  //   return redirect("/notes", {
+  //     headers: {
+  //       "Set-Cookie": await commitSession(session),
+  //     },
+  //   });
+  // }
 
 
 export default function Login() {

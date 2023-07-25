@@ -27,13 +27,25 @@
         margin-block-end: 2.93rem;
     }
 
+    &__subtitle2 {
+        @extend .login__subtitle;
+        margin-block-end: 1.93rem !important;
+    }
+
     &__input-wrapper {
         position: relative;
     }
 
+    &__error-message {
+        color: red;
+        display: block;
+        text-align: center;
+        margin-block-end: 25px;        
+    }
+
     &__input-user {
-        width: min(100%, 28.42413rem);
-        margin-bottom: 1.37rem;
+        inline-size: min(100%, 28.42413rem);
+        margin-block-end: 1.37rem;
         padding-inline-start: 1.64rem;
     }
 
@@ -93,8 +105,8 @@
 
         >input {
             all: revert;
-            width: 1.34338rem;
-            height: 1.34338rem;
+            inline-size: 1.34338rem;
+            block-size: 1.34338rem;
             border-radius: 0.3125rem;
             border: 1px solid #D6D6D6;
         }

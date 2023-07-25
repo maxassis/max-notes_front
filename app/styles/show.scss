@@ -72,6 +72,10 @@
     }
   }
 
+  &__color-icon {
+    cursor: pointer;
+  }
+
   &__save-button {
     all: unset;
   }
@@ -186,5 +190,15 @@
     opacity: 1;
     pointer-events: all;
   }
+
+  &__delete-button {
+    all: unset;
+    position: absolute;
+    inset-inline-end: 1rem;
+    inset-block-end: 10px;
+    cursor: pointer;
+  }
+
+
 }
 
