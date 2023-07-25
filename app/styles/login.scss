@@ -109,6 +109,7 @@
             block-size: 1.34338rem;
             border-radius: 0.3125rem;
             border: 1px solid #D6D6D6;
+            accent-color: #0016DF;
         }
 
         >span {
@@ -116,6 +117,12 @@
             font-size: 0.9375rem;
             font-weight: 400;
         }
+    }
+
+    &__terms {
+        @extend .login__error;
+        display: block;
+        position: static;
     }
 
 }

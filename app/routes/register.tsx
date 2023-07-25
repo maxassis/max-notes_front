@@ -1,5 +1,5 @@
 import styles from "../styles/login.css";
-import { Link, Form } from "@remix-run/react";
+import { useActionData, Form, Link } from "@remix-run/react";
 import { redirect } from "@remix-run/node";
 import type { ActionArgs } from "@remix-run/node";
 import { z } from "zod";
@@ -10,47 +10,50 @@ export function links() {
 }
 
 const schema = z.object({
-    name: z.string().min(1),
+    name: z.string().nonempty(),
     email: z.string().email(),
     password: z.string().min(6).trim(),
+    check: z.string().nonempty(),
   });
 
-  // export async function action({ request }: ActionArgs) {
-  //   const data = Object.fromEntries(await request.formData());
-  //   //console.log(data);
+  export async function action({ request }: ActionArgs) {
+    const data = Object.fromEntries(await request.formData());
+    console.log(data);
   
-  //   if (!schema.safeParse(data).success) {
-  //     console.log("deu ruim");
+    if (!schema.safeParse(data).success) {
+      console.log("deu ruim");
    
-  //     return schema.safeParse(data);
-  //   }
+      return schema.safeParse(data);
+    }
    
-  //   console.log("deu bom");
-  //   const token = fetch("http://localhost:3333/auth/register", {  
-  //     method: "POST",
-  //     headers: { "Content-Type": "application/json" },
-  //     body: JSON.stringify({
-  //       name: data.name as string,
-  //       email: data.email as string,
-  //       password: data.password as string,
-  //     }),
-  //   })
-  //     .then((r) => r.json())
-  //     .then((json) => json.accesstoken);
+    console.log("deu bom");
+    const token = fetch("http://localhost:3333/auth/register", {  
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        name: data.name as string,
+        email: data.email as string,
+        password: data.password as string,
+      }),
+    })
+      .then((r) => r.json())
+      .then((json) => json.accesstoken);
    
-  //   const session = await getSession(request.headers.get("Cookie"));
-  //   session.set("token", await token);
-  //   //console.log(session.data);
+    const session = await getSession(request.headers.get("Cookie"));
+    session.set("token", await token);
+    //console.log(session.data);
    
-  //   return redirect("/notes", {
-  //     headers: {
-  //       "Set-Cookie": await commitSession(session),
-  //     },
-  //   });
-  // }
+    return redirect("/notes", {
+      headers: {
+        "Set-Cookie": await commitSession(session),
+      },
+    });
+  }
 
 
 export default function Login() {
+  const data = useActionData();
+
   return (
     <div className="login">
       <div className="login__wrapper">
@@ -65,7 +68,7 @@ export default function Login() {
               placeholder="Username"
               name="name"
             />
-            <span className="login__error">A senha deve possuir no minimo 6 letras</span>
+            {data?.error?.issues.some((item: any) => item.path.includes("name")) ? <span className="login__error">Nome e obrigatorio</span> : null}
           </div>
 
           <div className="login__input-wrapper">
@@ -74,7 +77,7 @@ export default function Login() {
               placeholder="Email"
               name="email"
             />
-            <span className="login__error">A senha deve possuir no minimo 6 letras</span>
+            {data?.error?.issues.some((item: any) => item.path.includes("email")) ? <span className="login__error">Insira um email valido</span> : null}
           </div>
 
           <div className="login__input-wrapper">
@@ -84,13 +87,15 @@ export default function Login() {
               name="password"
               placeholder="Senha"
             />
-            <span className="login__error">A senha deve possuir no minimo 6 letras</span>
+            {data?.error?.issues.some((item: any) => item.path.includes("password")) ? <span className="login__error">A senha de possuir no minimo 6 letras</span> : null}
           </div>
 
           <div className="login__checkbox">
-            <input type="checkbox" />
+            <input type="checkbox" name="check" value="check" />
             <span>Aceito os termos e condições</span>
+            {/* {data?.error?.issues.some((item: any) => item.path.includes("check")) ? <span className="login__terms" >Marque a caixa</span> : null} */}
           </div>
+          {data?.error?.issues.some((item: any) => item.path.includes("check")) ? <span className="login__terms" >Aceite os termos</span> : null}
 
           <button className="login__button" style={{ marginTop: "1.84rem" }}>
             Continue
