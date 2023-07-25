@@ -38,7 +38,7 @@ export const action = async ({ request }: ActionArgs) => {
   const data = Object.fromEntries(await request.formData());
   console.log(data);
 
-  if (!schema.safeParse(data).success) {
+  if (data.intent !== "delete" && !schema.safeParse(data).success) {
     console.log("deu ruim");
     return schema.safeParse(data);
   }
@@ -46,7 +46,18 @@ export const action = async ({ request }: ActionArgs) => {
   const session = await getSession(request.headers.get("Cookie"));
   const authorization = session.data.token;
 
-  if(data.id) {
+  if(data.intent === "delete") {
+    fetch("http://localhost:3333/posts/" + data.id, {
+    method: "DELETE",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: "bearer " + authorization,
+    },
+  }).then((response) => response.json())
+  .then((json) => console.log(json))
+  }
+
+  if(data.intent !== "delete" && data.id) {
     fetch("http://localhost:3333/posts/" + data.id, {
       method: "PATCH",
       headers: {
@@ -93,6 +104,7 @@ export default function Show() {
   const [cardData, setCardData] = useState<Omit<CardProps, "created">>({ color: "#fff", content: "", title: "", id: 0 });
   const data = useLoaderData() as CardContent[];
   const req = useActionData();
+  //const fetcher = useFetcher();
 
 
   function openModal(dt: CardProps) {
@@ -113,6 +125,11 @@ export default function Show() {
     modalRef.current?.close()
   }
   }
+
+  // function deleteCard(id: number) {
+  //   fetcher.submit(null, {method: 'delete', action: `posts/${id}`})
+    
+  // }
 
   return (
     <>
@@ -329,23 +346,33 @@ export default function Show() {
                 </div>
               </div>
 
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="17.5"
-                height="17.5"
-                fill="none"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  stroke="#000"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  d="M10 12v5M14 12v5M4 7h16M6 10v8a3 3 0 0 0 3 3h6a3 3 0 0 0 3-3v-8M9 5a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v2H9V5Z"
-                />
-              </svg>
             </div>   
          </Form>
+
+         <Form method="POST" name="delete">        
+         <button className="modal__delete-button">
+          <input type="hidden" name="id" value={cardData?.id} />
+          <input type="hidden" name="intent" value="delete" />          
+            <svg                
+              xmlns="http://www.w3.org/2000/svg"
+              width="17.5"
+              height="17.5"
+              fill="none"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke="#000"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                d="M10 12v5M14 12v5M4 7h16M6 10v8a3 3 0 0 0 3 3h6a3 3 0 0 0 3-3v-8M9 5a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v2H9V5Z"
+              />
+            </svg>
+        </button> 
+        </Form>   
+
+
+
                  
         </dialog>
 
