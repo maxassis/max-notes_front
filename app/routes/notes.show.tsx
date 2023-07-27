@@ -14,7 +14,7 @@ export function links() {
 }
 
 const schema = z.object({
-  title: z.string().nonempty(),
+  title: z.string().optional(),
   content: z.string().optional(),
   color: z.string().optional(),
 });
@@ -31,12 +31,12 @@ export async function loader({ request }: LoaderArgs) {
     headers: { Authorization: "bearer " + authorization },
   });
 
-  return await res.json();
+  return res.json();
 }
 
 export const action = async ({ request }: ActionArgs) => {
   const data = Object.fromEntries(await request.formData());
- // console.log(data);
+  console.log(data);
 
   if (data.intent !== "delete" && !schema.safeParse(data).success) {
     console.log("deu ruim");
@@ -47,6 +47,7 @@ export const action = async ({ request }: ActionArgs) => {
   const authorization = session.data.token;
 
   if(data.intent === "delete") {
+    console.log("delete")
     fetch("http://localhost:3333/posts/" + data.id, {
     method: "DELETE",
     headers: {
@@ -54,10 +55,12 @@ export const action = async ({ request }: ActionArgs) => {
       Authorization: "bearer " + authorization,
     },
   }).then((response) => response.json())
+  .then(() => redirect("/notes/show"))
   //.then((json) => console.log(json))
   }
-
+  
   if(data.intent !== "delete" && data.id) {
+    console.log("alteração")
     fetch("http://localhost:3333/posts/" + data.id, {
       method: "PATCH",
       headers: {
@@ -70,9 +73,11 @@ export const action = async ({ request }: ActionArgs) => {
         color: data.color,
       }),
     }).then((response) => response.json())
-    //.then((json) => () => console.log(json))
+    .then(() => redirect("/notes/show"))
   }
-  else {
+  
+  if(data.intent !== "delete" && !data.id) {
+  console.log("criar");
   fetch("http://localhost:3333/posts/create", {
     method: "POST",
     headers: {
@@ -84,16 +89,11 @@ export const action = async ({ request }: ActionArgs) => {
       content: data.content,
       color: data.color,
     }),
-  }).then((response) => response.json());
-  //.then(() => (json) => console.log(json))
+  }).then((response) => response.json())
+  .then(() => redirect("/notes/show"))
   }
 
-  const res = await fetch("http://localhost:3333/posts", {
-    headers: { Authorization: "bearer " + authorization },
-  });
-  
-
-  return await res.json();
+  return null
 };
  
 export default function Show() {
@@ -110,6 +110,8 @@ export default function Show() {
   const data = useLoaderData() as CardContent[];
   const req = useActionData();
   
+  console.log(data)
+  
   function openModal(dt: CardProps) {
     setCardData(dt)
     inputEditRef.current!.value = dt.title
@@ -118,7 +120,7 @@ export default function Show() {
     modalRef.current?.showModal()
   }
 
-  function closeModal(e?: React.MouseEvent<HTMLDialogElement>) {
+  function closeModal(e: React.MouseEvent<HTMLDialogElement>) {
     const dialogDimensions = modalRef.current?.getBoundingClientRect() as DOMRect
     if (
       e.clientX < dialogDimensions?.left ||
@@ -357,7 +359,7 @@ export default function Show() {
             </div>   
          </Form>
 
-         <Form method="POST" name="delete">        
+         <Form method="DELETE" name="delete">        
          <button className="modal__delete-button" onClick={() => modalRef.current?.close()}>
           <input type="hidden" name="id" value={cardData?.id} />
           <input type="hidden" name="intent" value="delete" />          
@@ -381,7 +383,7 @@ export default function Show() {
         
       </dialog>
 
-      <div className="show">
+      <div className="show" >
         {data.map((item, index) => {
           return (
               <Card
