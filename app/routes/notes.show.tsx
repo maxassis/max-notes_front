@@ -54,7 +54,7 @@ export const action = async ({ request }: ActionArgs) => {
       Authorization: "bearer " + authorization,
     },
   }).then((response) => response.json())
-  .then((json) => console.log(json))
+  //.then((json) => console.log(json))
   }
 
   if(data.intent !== "delete" && data.id) {
@@ -70,7 +70,7 @@ export const action = async ({ request }: ActionArgs) => {
         color: data.color,
       }),
     }).then((response) => response.json())
-    .then((json) => () => console.log(json))
+    //.then((json) => () => console.log(json))
   }
   else {
   fetch("http://localhost:3333/posts/create", {
@@ -99,6 +99,9 @@ export const action = async ({ request }: ActionArgs) => {
 export default function Show() {
   const modalRef = useRef<HTMLDialogElement>(null)
   const inputCreateRef = useRef<HTMLInputElement>(null)
+  const inputEditRef = useRef<HTMLInputElement>(null)
+  const textAreaEditRef = useRef<HTMLTextAreaElement>(null)
+  const colorEditRef = useRef<HTMLInputElement>(null)
   const textAreaCreateRef = useRef<HTMLTextAreaElement>(null)
   const [showColor, setShowColor] = useState<boolean>(false);
   const [showModalColor, setShowModalColor] = useState<boolean>(false);
@@ -106,13 +109,16 @@ export default function Show() {
   const [cardData, setCardData] = useState<Omit<CardProps, "created">>({ color: "#fff", content: "", title: "", id: 0 });
   const data = useLoaderData() as CardContent[];
   const req = useActionData();
- 
+  
   function openModal(dt: CardProps) {
-    setCardData(dt) 
+    setCardData(dt)
+    inputEditRef.current!.value = dt.title
+    textAreaEditRef.current!.value = dt.content
+    colorEditRef.current!.value = dt.color
     modalRef.current?.showModal()
   }
 
-  function closeModal(e: React.MouseEvent<HTMLDialogElement> ) {
+  function closeModal(e?: React.MouseEvent<HTMLDialogElement>) {
     const dialogDimensions = modalRef.current?.getBoundingClientRect() as DOMRect
     if (
       e.clientX < dialogDimensions?.left ||
@@ -258,7 +264,7 @@ export default function Show() {
               type="text"
               placeholder="Digite um titulo"
               name="title"
-              defaultValue={cardData?.title}
+              ref={inputEditRef}
             />
             {req?.error?.issues.some((item: any) =>
               item.path.includes("title")
@@ -270,14 +276,14 @@ export default function Show() {
               className="modal__textarea"
               placeholder="Crie uma nota..."
               name="content"
-              defaultValue={cardData?.content}
+              ref={textAreaEditRef}
             ></textarea>
-              <input type="hidden" name="color" value={cardData?.color} />
+              <input type="hidden" name="color" ref={colorEditRef} value={cardData?.color} />
               <input type="hidden" name="id" value={cardData?.id} />
              
               <div className="search__options">
               <div className="search__icons-wrapper">
-                <button className="search__save-button">
+                <button className="search__save-button" onClick={() => modalRef.current?.close()}>
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     width="15"
@@ -352,7 +358,7 @@ export default function Show() {
          </Form>
 
          <Form method="POST" name="delete">        
-         <button className="modal__delete-button">
+         <button className="modal__delete-button" onClick={() => modalRef.current?.close()}>
           <input type="hidden" name="id" value={cardData?.id} />
           <input type="hidden" name="intent" value="delete" />          
             <svg                

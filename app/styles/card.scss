@@ -12,10 +12,14 @@
     cursor: pointer;
 
     &__title {
+        max-inline-size: 230px;
         color: #000;
         font-size: 1.09863rem;
         font-weight: 600;
         line-height: 1.58688rem; 
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
     }
 
     &__content {
@@ -36,4 +40,10 @@
         line-height: 1.28175rem;
     }
 
+}
+
+.cardLoading {
+    inline-size: 4rem;
+    block-size: 4rem;
+    border: 1px solid red;
 }
