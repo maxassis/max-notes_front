@@ -9,7 +9,6 @@
     "sass": "sass --watch app/:app/ --style compressed"
   },
   "dependencies": {
-    "@formkit/auto-animate": "^0.7.0",
     "@netlify/functions": "^1.4.0",
     "@remix-run/css-bundle": "^1.18.1",
     "@remix-run/netlify": "^1.18.1",
@@ -20,8 +19,7 @@
     "lottie-react": "^2.4.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "zod": "^3.21.4",
-    "zustand": "^4.3.9"
+    "zod": "^3.21.4"
   },
   "devDependencies": {
     "@remix-run/dev": "^1.18.1",

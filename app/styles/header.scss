@@ -1,0 +1,36 @@
+.header {
+    display: flex;
+    align-content: center;
+    padding-inline-start: 1.5rem;
+
+    &__user {
+
+    }
+
+    &__user-data {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+
+    }
+
+    &__icon-wrapper {
+        inline-size: 3.5rem;
+        block-size: 3.5rem;
+        border-radius: 1rem;
+        background-color: black;
+    }
+
+    &__name {
+        font-size: 1rem;
+        font-weight: 700;
+    }
+
+    &__email {
+        font-size: 0.875rem;
+        font-weight: 400;
+    }
+
+
+
+}

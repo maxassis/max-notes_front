@@ -1,0 +1,48 @@
+.side {
+    display: grid;
+    align-content: space-between;
+    block-size: calc(100dvh - 4.375rem);
+   // background-color: bisque;
+    padding: 1.8295rem 1.37213rem;
+    border-inline-end: 1px solid gray;
+
+
+    &__single-item {
+        display: flex;
+        align-items: center;
+        block-size: 2.74rem;
+        margin-block-end: 0.91rem;  
+        border-radius: 0.22869rem;
+        // background: #E9F5FE;
+        padding-inline-start: 0.91rem;
+        cursor: pointer;
+        
+        &:hover {
+            background: #E9F5FE;
+        }
+    }
+
+    &__icon-wrapper {
+        display: flex;
+        align-items: center;
+        gap: 0.91rem;
+    }
+
+
+    &__logout {
+        display: flex;
+        align-items: center;
+        block-size: 2.74rem;
+        margin-block-end: 0.91rem;  
+        border-radius: 0.22869rem;
+        padding-inline-start: 0.91rem;
+        cursor: pointer;
+        background-color: #667A8A;
+
+        >span {
+            color: #fff;
+        }
+
+    }
+
+}

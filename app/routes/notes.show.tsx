@@ -36,7 +36,7 @@ export async function loader({ request }: LoaderArgs) {
 
 export const action = async ({ request }: ActionArgs) => {
   const data = Object.fromEntries(await request.formData());
-  console.log(data);
+//  console.log(data);
 
   if (data.intent !== "delete" && !schema.safeParse(data).success) {
     console.log("deu ruim");
@@ -47,7 +47,6 @@ export const action = async ({ request }: ActionArgs) => {
   const authorization = session.data.token;
 
   if(data.intent === "delete") {
-    console.log("delete")
     fetch("http://localhost:3333/posts/" + data.id, {
     method: "DELETE",
     headers: {
@@ -60,7 +59,6 @@ export const action = async ({ request }: ActionArgs) => {
   }
   
   if(data.intent !== "delete" && data.id) {
-    console.log("alteração")
     fetch("http://localhost:3333/posts/" + data.id, {
       method: "PATCH",
       headers: {
@@ -77,7 +75,6 @@ export const action = async ({ request }: ActionArgs) => {
   }
   
   if(data.intent !== "delete" && !data.id) {
-  console.log("criar");
   fetch("http://localhost:3333/posts/create", {
     method: "POST",
     headers: {
@@ -109,9 +106,7 @@ export default function Show() {
   const [cardData, setCardData] = useState<Omit<CardProps, "created">>({ color: "#fff", content: "", title: "", id: 0 });
   const data = useLoaderData() as CardContent[];
   const req = useActionData();
-  
-  console.log(data)
-  
+    
   function openModal(dt: CardProps) {
     setCardData(dt)
     inputEditRef.current!.value = dt.title
