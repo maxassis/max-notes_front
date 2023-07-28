@@ -14,6 +14,7 @@ const schema = z.object({
   password: z.string().min(6).trim(),
 });
 
+
 export async function action({ request }: ActionArgs) {
   const data = Object.fromEntries(await request.formData());
   //console.log(data);

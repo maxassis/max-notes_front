@@ -3,7 +3,7 @@ import Card, { links as cardStyle } from "../components/Card";
 import { useState, useRef } from "react";
 import { Form, useActionData, useMatches, } from "@remix-run/react";
 import { redirect } from "@remix-run/node";
-import type { ActionArgs } from "@remix-run/node";
+import type { ActionArgs, LoaderArgs } from "@remix-run/node";
 import { getSession } from "~/session.server";
 import type { CardContent, CardProps } from "~/types";
 import { z } from "zod";
@@ -19,20 +19,26 @@ const schema = z.object({
   color: z.string().optional(),
 });
 
-// export async function loader({ request }: LoaderArgs) {
-//   const session = await getSession(request.headers.get("Cookie"));
-//   const authorization = session.data.token;
+export async function loader({ request }: LoaderArgs) {
+  const session = await getSession(request.headers.get("Cookie"));
+  const authorization = session.data.token;
+  
+  if (!session.data.token) {
+    return redirect("/login");
+  }
 
-//   if (!session.data.token) {
-//     return redirect("/login");
-//   }
+  const decode = (token: string): string =>
+    decodeURIComponent(
+        atob(token.split('.')[1].replace('-', '+').replace('_', '/'))
+            .split('')
+            .map((c) => `%${('00' + c.charCodeAt(0).toString(16)).slice(-2)}`)
+            .join('')
+    );
 
-//   const res = await fetch("http://localhost:3333/posts", {
-//     headers: { Authorization: "bearer " + authorization },
-//   });
+  //console.log(JSON.parse(decode(authorization)));
 
-//   return res.json();
-// }
+  return JSON.parse(decode(authorization))
+}
 
 export const action = async ({ request }: ActionArgs) => {
   const data = Object.fromEntries(await request.formData());

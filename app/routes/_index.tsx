@@ -12,7 +12,7 @@ export const meta: V2_MetaFunction = () => {
 
 export async function loader({request}: LoaderArgs) {
   const session = await getSession(request.headers.get("Cookie"))
-  
+
   if(!session.data.token) {
       return redirect("/login")
   }

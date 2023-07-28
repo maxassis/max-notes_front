@@ -1,6 +1,6 @@
 import Side, { links as sideStyle } from "~/components/Side";
 import styles from "../styles/notes.css";
-import { Outlet, useLoaderData } from "@remix-run/react";
+import { Outlet } from "@remix-run/react";
 import Header, { links as headerStyle } from '~/components/Header';
 import type { LoaderArgs } from "@remix-run/node";
 import { getSession } from "~/session.server";
