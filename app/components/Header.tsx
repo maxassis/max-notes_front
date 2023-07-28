@@ -11,7 +11,7 @@ export default function Header() {
                 <div className="header__user-data">
                     <div className="header__icon-wrapper"></div>
                     <div>
-                        <h4 className="header__name">Max</h4>
+                        <h4 className="header__name">{process.env.NODE_ENV}</h4>
                         <h4 className="header__email">max@teste.com</h4>
                     </div>
                 </div>

@@ -1,9 +1,9 @@
 import styles from "../styles/show.css";
 import Card, { links as cardStyle } from "../components/Card";
 import { useState, useRef } from "react";
-import { Form, useActionData, useLoaderData } from "@remix-run/react";
+import { Form, useActionData, useMatches, } from "@remix-run/react";
 import { redirect } from "@remix-run/node";
-import type { LoaderArgs, ActionArgs } from "@remix-run/node";
+import type { ActionArgs } from "@remix-run/node";
 import { getSession } from "~/session.server";
 import type { CardContent, CardProps } from "~/types";
 import { z } from "zod";
@@ -19,20 +19,20 @@ const schema = z.object({
   color: z.string().optional(),
 });
 
-export async function loader({ request }: LoaderArgs) {
-  const session = await getSession(request.headers.get("Cookie"));
-  const authorization = session.data.token;
+// export async function loader({ request }: LoaderArgs) {
+//   const session = await getSession(request.headers.get("Cookie"));
+//   const authorization = session.data.token;
 
-  if (!session.data.token) {
-    return redirect("/login");
-  }
+//   if (!session.data.token) {
+//     return redirect("/login");
+//   }
 
-  const res = await fetch("http://localhost:3333/posts", {
-    headers: { Authorization: "bearer " + authorization },
-  });
+//   const res = await fetch("http://localhost:3333/posts", {
+//     headers: { Authorization: "bearer " + authorization },
+//   });
 
-  return res.json();
-}
+//   return res.json();
+// }
 
 export const action = async ({ request }: ActionArgs) => {
   const data = Object.fromEntries(await request.formData());
@@ -54,8 +54,6 @@ export const action = async ({ request }: ActionArgs) => {
       Authorization: "bearer " + authorization,
     },
   }).then((response) => response.json())
-  .then(() => redirect("/notes/show"))
-  //.then((json) => console.log(json))
   }
   
   if(data.intent !== "delete" && data.id) {
@@ -71,7 +69,6 @@ export const action = async ({ request }: ActionArgs) => {
         color: data.color,
       }),
     }).then((response) => response.json())
-    .then(() => redirect("/notes/show"))
   }
   
   if(data.intent !== "delete" && !data.id) {
@@ -104,8 +101,11 @@ export default function Show() {
   const [showModalColor, setShowModalColor] = useState<boolean>(false);
   const [selectedColor, setSelectedColor] = useState<string>("#fff");
   const [cardData, setCardData] = useState<Omit<CardProps, "created">>({ color: "#fff", content: "", title: "", id: 0 });
-  const data = useLoaderData() as CardContent[];
+ // const data = useLoaderData() as CardContent[];
   const req = useActionData();
+  const [, notes] = useMatches();
+  const {data} = notes
+  //console.log(data)
     
   function openModal(dt: CardProps) {
     setCardData(dt)
@@ -133,6 +133,13 @@ export default function Show() {
     textAreaCreateRef.current!.value = ""
     setShowColor(false)
     //inputCreateRef.current!.value = ""
+  }
+
+  function clearInputs(): void {
+    inputCreateRef.current!.value = ""
+    textAreaCreateRef.current!.value = ""
+    setSelectedColor("#fff")
+    setShowColor(false)
   }
 
   return (
@@ -234,6 +241,7 @@ export default function Show() {
               </div>
 
               <svg
+                onClick={() => clearInputs()}
                 xmlns="http://www.w3.org/2000/svg"
                 width="17.5"
                 height="17.5"
@@ -379,7 +387,7 @@ export default function Show() {
       </dialog>
 
       <div className="show" >
-        {data.map((item, index) => {
+        {data.map((item: CardContent, index: string) => {
           return (
               <Card
                 id={item.id}
