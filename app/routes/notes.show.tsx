@@ -1,7 +1,7 @@
 import styles from "../styles/show.css";
 import Card, { links as cardStyle } from "../components/Card";
-import { useState, useRef } from "react";
-import { Form, useActionData, useMatches, } from "@remix-run/react";
+import { useState, useRef, useEffect } from "react";
+import { Form, useActionData, useMatches, useNavigation } from "@remix-run/react";
 import { redirect } from "@remix-run/node";
 import type { ActionArgs, LoaderArgs } from "@remix-run/node";
 import { getSession } from "~/session.server";
@@ -42,7 +42,7 @@ export async function loader({ request }: LoaderArgs) {
 
 export const action = async ({ request }: ActionArgs) => {
   const data = Object.fromEntries(await request.formData());
-//  console.log(data);
+  console.log(data);
 
   if (data.intent !== "delete" && !schema.safeParse(data).success) {
     console.log("deu ruim");
@@ -103,15 +103,21 @@ export default function Show() {
   const textAreaEditRef = useRef<HTMLTextAreaElement>(null)
   const colorEditRef = useRef<HTMLInputElement>(null)
   const textAreaCreateRef = useRef<HTMLTextAreaElement>(null)
+  // const [content, setContent] = useState<string>("");
+  // const [title, setTitle] = useState<string>("");
   const [showColor, setShowColor] = useState<boolean>(false);
   const [showModalColor, setShowModalColor] = useState<boolean>(false);
   const [selectedColor, setSelectedColor] = useState<string>("#fff");
   const [cardData, setCardData] = useState<Omit<CardProps, "created">>({ color: "#fff", content: "", title: "", id: 0 });
- // const data = useLoaderData() as CardContent[];
   const req = useActionData();
   const [, notes] = useMatches();
   const {data} = notes
   //console.log(data)
+  const navigation = useNavigation();
+  // console.log(navigation);
+  
+
+
     
   function openModal(dt: CardProps) {
     setCardData(dt)
@@ -134,14 +140,19 @@ export default function Show() {
   }
   }
 
-  function clearCreateInput(): void {
-    
-    textAreaCreateRef.current!.value = ""
-    setShowColor(false)
-    //inputCreateRef.current!.value = ""
-  }
+  useEffect(() => {
+    if(navigation.state === "loading" && navigation.formMethod === "POST" && navigation.formAction === "/notes/show") {
+      // alert("teste")
+      console.log(navigation);
+      clearInputs()
+
+    }
+  },[navigation])
+
+
 
   function clearInputs(): void {
+  //  console.log(inputCreateRef.current!.value);
     inputCreateRef.current!.value = ""
     textAreaCreateRef.current!.value = ""
     setSelectedColor("#fff")
@@ -152,12 +163,14 @@ export default function Show() {
     <>
       <div className="search">
         <div className="search__box" style={{ backgroundColor: selectedColor, borderColor: (selectedColor === "#fff" ? "#d6d6d6" : selectedColor)}}>
-          <Form method="POST">
+          <Form method="POST" name="create">
             <input
               className="search__input"
               type="text"
               placeholder="Digite um titulo"
               name="title"
+              // onChange={(e) => setTitle(e.target.value)} 
+              // value={title}
               ref={inputCreateRef}
             />
             {req?.error?.issues.some((item: any) =>
@@ -170,12 +183,15 @@ export default function Show() {
               className="search__textarea"
               placeholder="Crie uma nota..."
               name="content"
+              
+              // onChange={(e) => setContent(e.target.value)} 
+              // value={content}
               ref={textAreaCreateRef}
             ></textarea>
             <input type="hidden" name="color" value={selectedColor} />
             <div className="search__options">
               <div className="search__icons-wrapper">
-                <button className="search__save-button" onClick={() => clearCreateInput()}>
+                <button className="search__save-button">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     width="15"
@@ -268,7 +284,7 @@ export default function Show() {
       </div>
 
         <dialog className="modal__dialog" ref={modalRef} style={{ backgroundColor: cardData?.color }} onClick={(e) => closeModal(e)} >
-         <Form method="POST" name="edit" className="modal__form">
+         <Form method="PATCH" name="edit" className="modal__form">
         
               <input
               className="modal__input"
