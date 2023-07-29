@@ -20,7 +20,7 @@ export async function action({ request }: ActionArgs) {
   //console.log(data);
 
   if (!schema.safeParse(data).success) {
-    console.log("deu ruim");
+    console.log("deu ruim login");
 
     return schema.safeParse(data);
   }

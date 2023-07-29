@@ -1,17 +1,13 @@
 .header {
+    inline-size: 100%;
     display: flex;
-    align-content: center;
+    align-items: center;
     padding-inline-start: 1.5rem;
-
-    &__user {
-
-    }
 
     &__user-data {
         display: flex;
         align-items: center;
         gap: 0.75rem;
-
     }
 
     &__icon-wrapper {
@@ -31,6 +27,15 @@
         font-weight: 400;
     }
 
-
+    &__input {
+        border-radius: 0.50206rem;
+        border: 0.063rem solid #d6d6d6;
+        background: #fff; 
+        padding-inline-start: 1rem;
+        max-inline-size: 37.5rem ;
+        inline-size: 100% !important; 
+        block-size: 3.125rem;
+        margin-inline-start: 3.125rem;  
+    }
 
 }

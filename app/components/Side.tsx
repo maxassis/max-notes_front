@@ -11,6 +11,7 @@ export default function Side() {
     return(
         <div className="side">
             <div>
+                <Link to="/notes/show">
                 <div className="side__single-item">
                     <div className="side__icon-wrapper">    
                         <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="none" viewBox="0 0 24 24">
@@ -19,6 +20,7 @@ export default function Side() {
                         <span>Notas</span>
                     </div>
                 </div>
+                </Link>
                 <div className="side__single-item">
                     <div className="side__icon-wrapper">    
                         <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="none" viewBox="0 0 24 24">

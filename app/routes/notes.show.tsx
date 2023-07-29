@@ -1,7 +1,7 @@
 import styles from "../styles/show.css";
 import Card, { links as cardStyle } from "../components/Card";
 import { useState, useRef, useEffect } from "react";
-import { Form, useActionData, useMatches, useNavigation } from "@remix-run/react";
+import { Form, useActionData, useLoaderData, useMatches, useNavigation } from "@remix-run/react";
 import { redirect } from "@remix-run/node";
 import type { ActionArgs, LoaderArgs } from "@remix-run/node";
 import { getSession } from "~/session.server";
@@ -22,22 +22,16 @@ const schema = z.object({
 export async function loader({ request }: LoaderArgs) {
   const session = await getSession(request.headers.get("Cookie"));
   const authorization = session.data.token;
-  
+
   if (!session.data.token) {
     return redirect("/login");
   }
 
-  const decode = (token: string): string =>
-    decodeURIComponent(
-        atob(token.split('.')[1].replace('-', '+').replace('_', '/'))
-            .split('')
-            .map((c) => `%${('00' + c.charCodeAt(0).toString(16)).slice(-2)}`)
-            .join('')
-    );
+  const res = await fetch("http://localhost:3333/posts", {
+    headers: { Authorization: "bearer " + authorization },
+  });
 
-  //console.log(JSON.parse(decode(authorization)));
-
-  return JSON.parse(decode(authorization))
+  return res.json();
 }
 
 export const action = async ({ request }: ActionArgs) => {
@@ -45,7 +39,7 @@ export const action = async ({ request }: ActionArgs) => {
   console.log(data);
 
   if (data.intent !== "delete" && !schema.safeParse(data).success) {
-    console.log("deu ruim");
+    console.log("deu ruim show");
     return schema.safeParse(data);
   }
 
@@ -103,22 +97,15 @@ export default function Show() {
   const textAreaEditRef = useRef<HTMLTextAreaElement>(null)
   const colorEditRef = useRef<HTMLInputElement>(null)
   const textAreaCreateRef = useRef<HTMLTextAreaElement>(null)
-  // const [content, setContent] = useState<string>("");
-  // const [title, setTitle] = useState<string>("");
   const [showColor, setShowColor] = useState<boolean>(false);
   const [showModalColor, setShowModalColor] = useState<boolean>(false);
   const [selectedColor, setSelectedColor] = useState<string>("#fff");
   const [cardData, setCardData] = useState<Omit<CardProps, "created">>({ color: "#fff", content: "", title: "", id: 0 });
   const req = useActionData();
-  const [, notes] = useMatches();
-  const {data} = notes
-  //console.log(data)
+  const data = useLoaderData() as CardContent[]
   const navigation = useNavigation();
-  // console.log(navigation);
   
 
-
-    
   function openModal(dt: CardProps) {
     setCardData(dt)
     inputEditRef.current!.value = dt.title

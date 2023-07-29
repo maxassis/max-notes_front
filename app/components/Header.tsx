@@ -1,14 +1,14 @@
 import styles from "../styles/header.css";
-import { useMatches, } from "@remix-run/react";
+import { Form, useMatches, } from "@remix-run/react";
 
 export function links() {
     return [{ rel: "stylesheet", href: styles }];
   }
 
 export default function Header() {
-    const [,,show] = useMatches();
-    const {data: {email, name}}  = show
-    //console.log(email, name)
+    const [,notes] = useMatches();
+    const {data: {email, name}}  = notes
+   // console.log(email, name)
     
     return (
         <div className="header">
@@ -21,6 +21,9 @@ export default function Header() {
                     </div>
                 </div>
             </div>
+            <Form method="POST" action="/notes/search">
+                <input className="header__input" placeholder="Pesquisar" name="content" />
+            </Form>
         </div>
     )
 }
