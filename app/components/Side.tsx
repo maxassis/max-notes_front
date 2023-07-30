@@ -1,4 +1,3 @@
-import { redirect } from "@remix-run/node";
 import styles from "../styles/side.css";
 import { Link } from "@remix-run/react";
 
@@ -11,6 +10,14 @@ export default function Side() {
     return(
         <div className="side">
             <div>
+                <div className="side__user-data">
+                    <div className="side__icon-user"></div>
+                    <div>
+                        <h4 className="side__name">nome</h4>
+                        <h4 className="side__email">email</h4>
+                    </div>
+                </div>
+               
                 <Link to="/notes/show">
                 <div className="side__single-item">
                     <div className="side__icon-wrapper">    

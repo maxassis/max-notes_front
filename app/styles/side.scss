@@ -1,10 +1,10 @@
 .side {
     display: grid;
     align-content: space-between;
-    block-size: calc(100dvh - 4.375rem);
-   // background-color: bisque;
-    padding: 1.8295rem 1.37213rem;
-    border-inline-end: 1px solid gray;
+    block-size: 100dvh;
+    padding: 1.8295rem 1.37213rem 1.8295rem 1.37213rem;
+    background: #FFF;
+    box-shadow: 0px 3.125011682510376px 35.1563835144043px 0px rgba(0, 0, 0, 0.08);
 
 
     &__single-item {
@@ -20,6 +20,30 @@
         &:hover {
             background: #E9F5FE;
         }
+    }
+
+    &__user-data {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        margin-block-end: 2.75rem;
+    }
+
+    &__icon-user {
+        inline-size: 3.5rem;
+        block-size: 3.5rem;
+        border-radius: 1rem;
+        background-color: black;
+    }
+
+    &__name {
+        font-size: 1rem;
+        font-weight: 700;
+    }
+
+    &__email {
+        font-size: 0.875rem;
+        font-weight: 400;
     }
 
     &__icon-wrapper {
@@ -38,11 +62,14 @@
         padding-inline-start: 0.91rem;
         cursor: pointer;
         background-color: #667A8A;
+        transition: background 0.2s ease-in-out;
 
         >span {
             color: #fff;
         }
 
+        &:hover {    
+        background: darken(#667A8A, 8%);
+        }
     }
-
 }

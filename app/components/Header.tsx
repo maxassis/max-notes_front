@@ -12,15 +12,6 @@ export default function Header() {
     
     return (
         <div className="header">
-            <div className="header__user">
-                <div className="header__user-data">
-                    <div className="header__icon-wrapper"></div>
-                    <div>
-                        <h4 className="header__name">{name}</h4>
-                        <h4 className="header__email">{email}</h4>
-                    </div>
-                </div>
-            </div>
             <Form method="POST" action="/notes/search">
                 <input className="header__input" placeholder="Pesquisar" name="content" />
             </Form>

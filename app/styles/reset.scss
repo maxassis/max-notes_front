@@ -28,7 +28,7 @@
   /* Allow percentage-based heights */
   /* Setting width: 100% isn't required because it is a default for block-level elements (html and body are block level) */
   html, body {
-    height: 100%;
+    block-size: 100%;
     font-family: 'Inter', sans-serif;
   }
   
@@ -44,7 +44,7 @@
     accent-color: black;
   
     /* Because overscroll-behavior: none only works on WebKit, a background color is set that will show when overscroll occurs  */
-    background: white;
+    background: #fff;
   }
   
   /* Remove unintuitive behaviour such as gaps around media elements.  */

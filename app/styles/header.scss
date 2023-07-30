@@ -1,41 +1,19 @@
 .header {
     inline-size: 100%;
-    display: flex;
+    block-size: 100%;
+    display: grid;
     align-items: center;
-    padding-inline-start: 1.5rem;
-
-    &__user-data {
-        display: flex;
-        align-items: center;
-        gap: 0.75rem;
-    }
-
-    &__icon-wrapper {
-        inline-size: 3.5rem;
-        block-size: 3.5rem;
-        border-radius: 1rem;
-        background-color: black;
-    }
-
-    &__name {
-        font-size: 1rem;
-        font-weight: 700;
-    }
-
-    &__email {
-        font-size: 0.875rem;
-        font-weight: 400;
-    }
+    background-color: #F5F5F5;
+    padding-inline-start: 50px;
 
     &__input {
         border-radius: 0.50206rem;
         border: 0.063rem solid #d6d6d6;
         background: #fff; 
         padding-inline-start: 1rem;
-        max-inline-size: 37.5rem ;
+        max-inline-size: 37.5rem !important ;
         inline-size: 100% !important; 
         block-size: 3.125rem;
-        margin-inline-start: 3.125rem;  
     }
 
 }

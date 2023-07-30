@@ -213,38 +213,38 @@ export default function Show() {
                   ></div>
                   <div
                     className="search__single-color"
-                    style={{ backgroundColor: "#FFAF22" }}
-                    onClick={() => setSelectedColor("#FFAF22")}
+                    style={{ backgroundColor: "#FFAE6D" }}
+                    onClick={() => setSelectedColor("#FFAE6D")}
                   ></div>
                   <div
                     className="search__single-color"
-                    style={{ backgroundColor: "#9CD483" }}
-                    onClick={() => setSelectedColor("#9CD483")}
+                    style={{ backgroundColor: "#E8FFCE" }}
+                    onClick={() => setSelectedColor("#E8FFCE")}
                   ></div>
                   <div
                     className="search__single-color"
-                    style={{ backgroundColor: "#FC6016" }}
-                    onClick={() => setSelectedColor("#FC6016")}
+                    style={{ backgroundColor: "#FEFF86" }}
+                    onClick={() => setSelectedColor("#FEFF86")}
                   ></div>
                   <div
                     className="search__single-color"
-                    style={{ backgroundColor: "#9859FF" }}
-                    onClick={() => setSelectedColor("#9859FF")}
+                    style={{ backgroundColor: "#EA8FEA" }}
+                    onClick={() => setSelectedColor("#EA8FEA")}
                   ></div>
                   <div
                     className="search__single-color"
-                    style={{ backgroundColor: "#ADADAD" }}
-                    onClick={() => setSelectedColor("#ADADAD")}
+                    style={{ backgroundColor: "#FAF8F1" }}
+                    onClick={() => setSelectedColor("#FAF8F1")}
                   ></div>
                   <div
                     className="search__single-color"
-                    style={{ backgroundColor: "#75C2F6" }}
-                    onClick={() => setSelectedColor("#75C2F6")}
+                    style={{ backgroundColor: "#E3F6FF" }}
+                    onClick={() => setSelectedColor("#E3F6FF")}
                   ></div>
                   <div
                     className="search__single-color"
-                    style={{ backgroundColor: "#FF52A2" }}
-                    onClick={() => setSelectedColor("#FF52A2")}
+                    style={{ backgroundColor: "#FFAACF" }}
+                    onClick={() => setSelectedColor("#FFAACF")}
                   ></div>
                 </div>
               </div>
@@ -332,38 +332,38 @@ export default function Show() {
                   ></div>
                   <div
                     className="search__single-color"
-                    style={{ backgroundColor: "#FFAF22" }}
-                    onClick={() => setCardData({...cardData,  color: "#FFAF22" })}
+                    style={{ backgroundColor: "#FFAE6D" }}
+                    onClick={() => setCardData({...cardData,  color: "#FFAE6D" })}
                   ></div>
                   <div
                     className="search__single-color"
-                    style={{ backgroundColor: "#9CD483" }}
-                    onClick={() => setCardData({...cardData,  color: "#9CD483" })}
+                    style={{ backgroundColor: "#E8FFCE" }}
+                    onClick={() => setCardData({...cardData,  color: "#E8FFCE" })}
                   ></div>
                   <div
                     className="search__single-color"
-                    style={{ backgroundColor: "#FC6016" }}
-                    onClick={() => setCardData({...cardData,  color: "#FC6016" })}
+                    style={{ backgroundColor: "#FEFF86" }}
+                    onClick={() => setCardData({...cardData,  color: "#FEFF86" })}
                   ></div>
                   <div
                     className="search__single-color"
-                    style={{ backgroundColor: "#9859FF" }}
-                    onClick={() => setCardData({...cardData,  color: "#9859FF" })}
+                    style={{ backgroundColor: "#EA8FEA" }}
+                    onClick={() => setCardData({...cardData,  color: "#EA8FEA" })}
                   ></div>
                   <div
                     className="search__single-color"
-                    style={{ backgroundColor: "#ADADAD" }}
-                    onClick={() => setCardData({...cardData,  color: "#ADADAD" })}
+                    style={{ backgroundColor: "#FAF8F1" }}
+                    onClick={() => setCardData({...cardData,  color: "#FAF8F1" })}
                   ></div>
                   <div
                     className="search__single-color"
-                    style={{ backgroundColor: "#75C2F6" }}
-                    onClick={() => setCardData({...cardData,  color: "#75C2F6" })}
+                    style={{ backgroundColor: "#E3F6FF" }}
+                    onClick={() => setCardData({...cardData,  color: "#E3F6FF" })}
                   ></div>
                   <div
                     className="search__single-color"
-                    style={{ backgroundColor: "#FF52A2" }}
-                    onClick={() => setCardData({...cardData,  color: "#FF52A2" })}
+                    style={{ backgroundColor: "#FFAACF" }}
+                    onClick={() => setCardData({...cardData,  color: "#FFAACF" })}
                   ></div>
                 </div>
               </div>
