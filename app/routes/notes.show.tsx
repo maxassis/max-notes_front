@@ -1,7 +1,7 @@
 import styles from "../styles/show.css";
 import Card, { links as cardStyle } from "../components/Card";
 import { useState, useRef, useEffect } from "react";
-import { Form, useActionData, useLoaderData, useMatches, useNavigation } from "@remix-run/react";
+import { Form, useActionData, useLoaderData, useNavigation } from "@remix-run/react";
 import { redirect } from "@remix-run/node";
 import type { ActionArgs, LoaderArgs } from "@remix-run/node";
 import { getSession } from "~/session.server";
@@ -160,19 +160,11 @@ export default function Show() {
               // value={title}
               ref={inputCreateRef}
             />
-            {req?.error?.issues.some((item: any) =>
-              item.path.includes("title")
-            ) ? (
-              <span className="search__error">Titulo obrigatório</span>
-            ) : null}
             <textarea
               style={{ backgroundColor: selectedColor }}
               className="search__textarea"
               placeholder="Crie uma nota..."
               name="content"
-              
-              // onChange={(e) => setContent(e.target.value)} 
-              // value={content}
               ref={textAreaCreateRef}
             ></textarea>
             <input type="hidden" name="color" value={selectedColor} />
@@ -396,7 +388,7 @@ export default function Show() {
       </dialog>
 
       <div className="show" >
-        {data.map((item: CardContent, index: string) => {
+        {data.map((item, index) => {
           return (
               <Card
                 id={item.id}

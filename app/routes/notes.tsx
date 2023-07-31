@@ -1,19 +1,24 @@
 import Side, { links as sideStyle } from "~/components/Side";
 import styles from "../styles/notes.css";
-import { Outlet } from "@remix-run/react";
-import Header, { links as headerStyle } from '~/components/Header';
+import { Outlet, Form } from "@remix-run/react";
 import type { LoaderArgs, ActionArgs } from "@remix-run/node";
 import { getSession } from "~/session.server";
 import { redirect } from "@remix-run/node";
+import { z } from "zod";
+import { useState } from "react";
 
 export function links() {
-  return [{ rel: "stylesheet", href: styles }, ...sideStyle(), ...headerStyle() ];
+  return [{ rel: "stylesheet", href: styles }, ...sideStyle() ];
 }
+
+const schema = z.object({
+  content: z.string().nonempty().trim()
+})
 
 export async function loader({ request }: LoaderArgs) {
   const session = await getSession(request.headers.get("Cookie"));
   const authorization = session.data.token;
-  
+
   if (!session.data.token) {
     return redirect("/login");
   }
@@ -34,18 +39,30 @@ export async function loader({ request }: LoaderArgs) {
 export async function action({ request }: ActionArgs) {
   const data = Object.fromEntries(await request.formData());
   console.log(data);
+  
+  
+  if (!schema.safeParse(data).success) {
+    console.log("deu ruim");
 
-  return null
+    return schema.safeParse(data);
+  }
+
+  
+  return await data.content 
+ // return redirect("/notes/search")
 }
 
 export default function Notes() {
-//  const data = useLoaderData()
- // console.log(data)
+  const [input, setInput] = useState<string>("")
   
   return (
     <div className="notes">
       <header className="notes__header">
-        <Header />
+      <div className="header">
+            <Form method="POST" action={`/notes/search/${input}`} >
+                <input value={input} onChange={(e) => setInput(e.target.value)} className="header__input" placeholder="Pesquisar" name="content" />
+            </Form>
+        </div>
       </header>
 
       <aside className="notes__aside">

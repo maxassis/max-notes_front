@@ -25,3 +25,24 @@
         overflow: hidden;
     }
 }
+
+
+.header {
+    inline-size: 100%;
+    block-size: 100%;
+    display: grid;
+    align-items: center;
+    background-color: #F5F5F5;
+    padding-inline-start: 50px;
+
+    &__input {
+        border-radius: 0.50206rem;
+        border: 0.063rem solid #d6d6d6;
+        background: #fff; 
+        padding-inline-start: 1rem;
+        max-inline-size: 37.5rem !important ;
+        inline-size: 100% !important; 
+        block-size: 3.125rem;
+    }
+
+}

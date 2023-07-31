@@ -1,5 +1,5 @@
 import styles from "../styles/side.css";
-import { Link } from "@remix-run/react";
+import { Link, useMatches } from "@remix-run/react";
 
 export function links() {
     return [{ rel: "stylesheet", href: styles }];
@@ -7,14 +7,19 @@ export function links() {
 
 
 export default function Side() {
+    const [,notes] = useMatches();
+    const {data: {email, name}}  = notes
+
+
+
     return(
         <div className="side">
             <div>
                 <div className="side__user-data">
                     <div className="side__icon-user"></div>
                     <div>
-                        <h4 className="side__name">nome</h4>
-                        <h4 className="side__email">email</h4>
+                        <h4 className="side__name">{name}</h4>
+                        <h4 className="side__email">{email}</h4>
                     </div>
                 </div>
                
