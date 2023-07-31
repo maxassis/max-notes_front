@@ -11,11 +11,11 @@ function date(dt: string ): string {
     return dataFormatada
 }
 
-export default function Card({ color, content, title, created, openModal, id }: OpenModal) {
+export default function Card({ color, content, title, created, openModal, id, deleted }: OpenModal) {
   
   return (
     <div
-      onClick={() => openModal({ color, content, title, created, id })}
+      onClick={() => openModal({ color, content, title, created, id, deleted })}
       className="card"
       style={{ "background": color }}  
     >

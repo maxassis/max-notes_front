@@ -36,7 +36,6 @@ export async function loader({ request }: LoaderArgs) {
 
 export const action = async ({ request }: ActionArgs) => {
   const data = Object.fromEntries(await request.formData());
-  //console.log(data);
 
   if (data.intent !== "delete" && !schema.safeParse(data).success) {
     console.log("deu ruim show");
@@ -57,17 +56,12 @@ export const action = async ({ request }: ActionArgs) => {
   }
   
   if(data.intent !== "delete" && data.id) {
-    fetch("http://localhost:3333/posts/" + data.id, {
+    fetch("http://localhost:3333/posts/trash/" + data.id, {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",
         Authorization: "bearer " + authorization,
       },
-      body: JSON.stringify({
-        title: data.title,
-        content: data.content,
-        color: data.color,
-      }),
     }).then((response) => response.json())
   }
   
@@ -82,6 +76,7 @@ export const action = async ({ request }: ActionArgs) => {
       title: data.title,
       content: data.content,
       color: data.color,
+      deleted: data.deleted === "true" ? true : false,
     }),
   }).then((response) => response.json())
   .then(() => redirect("/notes/show"))
@@ -99,7 +94,7 @@ export default function Show() {
   const textAreaCreateRef = useRef<HTMLTextAreaElement>(null)
   const [showColor, setShowColor] = useState<boolean>(false);
   const [selectedColor, setSelectedColor] = useState<string>("#fff");
-  const [cardData, setCardData] = useState<Omit<CardProps, "created">>({ color: "#fff", content: "", title: "", id: 0 });
+  const [cardData, setCardData] = useState<Omit<CardProps, "created">>({ color: "#fff", content: "", title: "", id: 0, deleted: "false" });
   const data = useLoaderData() as CardContent[]
   const navigation = useNavigation();
   
@@ -164,6 +159,7 @@ export default function Show() {
               ref={textAreaCreateRef}
             ></textarea>
             <input type="hidden" name="color" value={selectedColor} />
+            <input type="hidden" name="deleted" value={cardData?.deleted} />
             <div className="search__options">
               <div className="search__icons-wrapper">
                 <button className="search__save-button">
@@ -383,6 +379,7 @@ export default function Show() {
                 title={item.title}
                 created={item.createdAt}
                 key={index}
+                deleted={item.deleted}
               />
           );
         })}

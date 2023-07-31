@@ -6,6 +6,7 @@ export interface CardContent {
   createdAt: string;
   updatedAt: string;
   userId: number;
+  deleted: string;
 }
 
 export interface CardProps {
@@ -14,6 +15,7 @@ export interface CardProps {
   content: string;
   created: string;
   id: number;
+  deleted: string;
 }
 
 export interface OpenModal extends CardProps {
@@ -22,6 +24,7 @@ export interface OpenModal extends CardProps {
     content,
     title,
     created,
-    id
+    id,
+    deleted
   }: CardProps) => void;
 }
