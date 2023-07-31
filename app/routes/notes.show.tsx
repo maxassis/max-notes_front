@@ -1,7 +1,7 @@
 import styles from "../styles/show.css";
 import Card, { links as cardStyle } from "../components/Card";
 import { useState, useRef, useEffect } from "react";
-import { Form, useActionData, useLoaderData, useNavigation } from "@remix-run/react";
+import { Form, useLoaderData, useNavigation } from "@remix-run/react";
 import { redirect } from "@remix-run/node";
 import type { ActionArgs, LoaderArgs } from "@remix-run/node";
 import { getSession } from "~/session.server";
@@ -36,7 +36,7 @@ export async function loader({ request }: LoaderArgs) {
 
 export const action = async ({ request }: ActionArgs) => {
   const data = Object.fromEntries(await request.formData());
-  console.log(data);
+  //console.log(data);
 
   if (data.intent !== "delete" && !schema.safeParse(data).success) {
     console.log("deu ruim show");
@@ -98,10 +98,8 @@ export default function Show() {
   const colorEditRef = useRef<HTMLInputElement>(null)
   const textAreaCreateRef = useRef<HTMLTextAreaElement>(null)
   const [showColor, setShowColor] = useState<boolean>(false);
-  const [showModalColor, setShowModalColor] = useState<boolean>(false);
   const [selectedColor, setSelectedColor] = useState<string>("#fff");
   const [cardData, setCardData] = useState<Omit<CardProps, "created">>({ color: "#fff", content: "", title: "", id: 0 });
-  const req = useActionData();
   const data = useLoaderData() as CardContent[]
   const navigation = useNavigation();
   
@@ -122,7 +120,7 @@ export default function Show() {
       e.clientY < dialogDimensions?.top ||
       e.clientY > dialogDimensions?.bottom
   ) {
-    setShowModalColor(false)
+    // setShowModalColor(false)
     modalRef.current?.close()
   }
   }
@@ -130,7 +128,7 @@ export default function Show() {
   useEffect(() => {
     if(navigation.state === "loading" && navigation.formMethod === "POST" && navigation.formAction === "/notes/show") {
       // alert("teste")
-      console.log(navigation);
+     // console.log(navigation);
       clearInputs()
 
     }
@@ -156,8 +154,6 @@ export default function Show() {
               type="text"
               placeholder="Digite um titulo"
               name="title"
-              // onChange={(e) => setTitle(e.target.value)} 
-              // value={title}
               ref={inputCreateRef}
             />
             <textarea
@@ -187,14 +183,11 @@ export default function Show() {
                   </svg>
                 </button>
 
-                <img src={Color} onClick={() => setShowColor(!showColor)} alt="colors" className="search__color-icon" />
-                
-                <div
-                  className={
-                    "search__colors-show " +
-                    (showColor && "search--open-colors")
-                  }
-                >
+                <button type="button" className="search__color-button"> 
+                  <img src={Color} onClick={() => setShowColor(!showColor)} alt="colors" className="search__color-icon" />
+                </button>   
+
+                <div className="search__colors-show ">
                   <div
                     className="search__single-color"
                     style={{
@@ -272,11 +265,6 @@ export default function Show() {
               name="title"
               ref={inputEditRef}
             />
-            {req?.error?.issues.some((item: any) =>
-              item.path.includes("title")
-            ) ? (
-              <span className="search__error">Titulo obrigatório</span>
-            ) : null}
             <textarea
               style={{ backgroundColor: cardData?.color }}
               className="modal__textarea"
@@ -306,14 +294,11 @@ export default function Show() {
                   </svg>
                 </button>
 
-                <img src={Color} onClick={() => setShowModalColor(!showModalColor)} alt="colors" className="search__color-icon" />
-                
-                <div
-                  className={
-                    "modal__colors-show " +
-                    (showModalColor && "modal--open-colors")
-                  }
-                >
+                <button type="button" className="modal__color-button"> 
+                  <img src={Color} alt="colors" className="search__color-icon" />
+                </button>
+
+                <div className="modal__colors-show ">
                   <div
                     className="search__single-color"
                     style={{

@@ -7,19 +7,16 @@ import { getSession } from "~/session.server";
 import type { CardContent, CardProps } from "~/types";
 import Card from "~/components/Card"
 import Color from "../images/colors.svg"
-//import { z } from "zod";
+
 
 export function links() {
   return [ ...showStyles() ];
 }
 
-
   export async function loader({ request, params }: LoaderArgs) {
     const session = await getSession(request.headers.get("Cookie"));
     const authorization = session.data.token;
   
-   // console.log(params.word)
-
     if (!session.data.token) {
       return redirect("/login"); 
     }
@@ -32,16 +29,13 @@ export function links() {
       }
     })
     .then((response) => response.json())
-    //.then((json) => console.log(json))
 
-    //console.log(await res)
-  
     return res;
   }
 
  export async function action({ request }: ActionArgs) { 
   const data = Object.fromEntries(await request.formData());
-  console.log(data);
+ // console.log(data);
   
   const session = await getSession(request.headers.get("Cookie"));
   const authorization = session.data.token;
@@ -79,7 +73,6 @@ export default function Teste() {
     const inputEditRef = useRef<HTMLInputElement>(null)
     const colorEditRef = useRef<HTMLInputElement>(null)
     const textAreaEditRef = useRef<HTMLTextAreaElement>(null)
-    const [showModalColor, setShowModalColor] = useState<boolean>(false);
     const [cardData, setCardData] = useState<Omit<CardProps, "created">>({ color: "#fff", content: "", title: "", id: 0 });
     const data = useLoaderData() as CardContent[]
    // console.log(data);
@@ -100,7 +93,6 @@ export default function Teste() {
       e.clientY < dialogDimensions?.top ||
       e.clientY > dialogDimensions?.bottom
   ) {
-    setShowModalColor(false)
     modalRef.current?.close()
   }
   }
@@ -145,15 +137,12 @@ export default function Teste() {
                     />
                   </svg>
                 </button>
-
-                <img src={Color} onClick={() => setShowModalColor(!showModalColor)} alt="colors" className="search__color-icon" />
                 
-                <div
-                  className={
-                    "modal__colors-show " +
-                    (showModalColor && "modal--open-colors")
-                  }
-                >
+                <button type="button" className="modal__color-button">   
+                  <img src={Color} alt="colors" className="search__color-icon" />
+                </button>
+
+                <div className="modal__colors-show ">
                   <div
                     className="search__single-color"
                     style={{
@@ -227,7 +216,7 @@ export default function Teste() {
         
       </dialog>
 
-      <div className="show" >
+      <div className="show" style={{"marginBlockStart": "40px"}} >
         {data?.map((item, index) => {
           return (
               <Card
