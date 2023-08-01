@@ -1,8 +1,8 @@
 import { useState, useRef } from "react";
 import { links as showStyles } from "./notes.show";
-import type { LoaderArgs, ActionArgs} from "@remix-run/node";
+import type { LoaderArgs, ActionArgs } from "@remix-run/node";
 import { redirect } from "@remix-run/node";
-import { Form, useLoaderData } from "@remix-run/react";
+import { Form, useLoaderData, useMatches } from "@remix-run/react";
 import { getSession } from "~/session.server";
 import type { CardContent, CardProps } from "~/types";
 import Card from "~/components/Card"
@@ -13,7 +13,7 @@ export function links() {
   return [ ...showStyles() ];
 }
 
-  export async function loader({ request, params }: LoaderArgs) {
+export async function loader({ request, params }: LoaderArgs) {
     const session = await getSession(request.headers.get("Cookie"));
     const authorization = session.data.token;
   
@@ -21,10 +21,9 @@ export function links() {
       return redirect("/login"); 
     }
   
-    const res = await fetch(`http://localhost:3333/posts/${params.word}`, {
-      method: "POST",
+    const res = await fetch(`http://localhost:3333/posts/trash/17`, {
+      method: "GET",
       headers: {
-        "Content-Type": "application/json",
         Authorization: "bearer " + authorization,
       }
     })
@@ -33,40 +32,25 @@ export function links() {
     return res;
   }
 
- export async function action({ request }: ActionArgs) { 
-  const data = Object.fromEntries(await request.formData());
- // console.log(data);
-  
-  const session = await getSession(request.headers.get("Cookie"));
-  const authorization = session.data.token;
 
-  if(data.intent === "delete") {
-    fetch("http://localhost:3333/posts/trash/" + data.id, {
-    method: "PATCH",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: "bearer " + authorization,
-    },
-  }).then((response) => response.json())
-  }
-  
-  if(data.intent !== "delete" && data.id) {
-    fetch("http://localhost:3333/posts/" + data.id, {
-      method: "PATCH",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: "bearer " + authorization,
-      },
-      body: JSON.stringify({
-        title: data.title,
-        content: data.content,
-        color: data.color,
-      }),
-    }).then((response) => response.json())
-  }
+  export async function action({ request }: ActionArgs) {
+    const data = Object.fromEntries(await request.formData());
+    console.log(data);
 
-  return null 
-}
+    const session = await getSession(request.headers.get("Cookie"));
+    const authorization = session.data.token;
+  
+     fetch(`http://localhost:3333/posts/clean/${data.intent}`, {
+        method: "POST",
+        headers: {
+          Authorization: "bearer " + authorization,
+        }
+      }).then((response) => response.json())
+      .then((response) => console.log(response))
+  
+  
+    return null
+  }
 
 export default function Search() {
     const modalRef = useRef<HTMLDialogElement>(null)
@@ -75,7 +59,9 @@ export default function Search() {
     const textAreaEditRef = useRef<HTMLTextAreaElement>(null)
     const [cardData, setCardData] = useState<Omit<CardProps, "created">>({ color: "#fff", content: "", title: "", id: 0, deleted: "false" });
     const data = useLoaderData() as CardContent[]
-   // console.log(data);
+    const route = useMatches()
+    const id = route[1].data.sub;
+    
     
    function openModal(dt: CardProps) {
     setCardData(dt)
@@ -216,7 +202,13 @@ export default function Search() {
         
       </dialog>
 
-      <div className="show-search" style={{"marginBlockStart": "40px"}} >
+      <div className="trash">
+        <Form method="POST">
+          <input type="hidden" name="intent" value={id} />
+          <button>Esvaziar Lixeira</button>
+        </Form>
+      </div>                
+      <div className="show-trash" style={{"marginBlockStart": "40px"}} >
         {data?.map((item, index) => {
           return (
               <Card

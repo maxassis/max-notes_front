@@ -119,11 +119,6 @@
     border-radius: 50%;
     cursor: pointer;
   }
-
-  &--open-colors {
-    // opacity: 1;
-    // pointer-events: all;
-  }
 }
 
 .show {
@@ -204,11 +199,6 @@
     }
   }
 
-  &--open-colors {
-    opacity: 1;
-    pointer-events: all;
-  }
-
   &__delete-button {
     all: unset;
     position: absolute;
@@ -216,7 +206,29 @@
     inset-block-end: 10px;
     cursor: pointer;
   }
+}
 
+:where(.show-search) {
+  @extend .show;
+  block-size: calc(100dvh - 86px);
+  margin-block: 15px 20px !important;
+}
 
+:where(.show-trash) {
+  @extend .show;
+  block-size: calc(100dvh - 126px);
+  margin-block: 15px 20px !important;
+}
+
+.trash {
+  text-align: center;
+  margin-block-start: 15px;
+
+  button {
+    all: unset;
+    cursor: pointer;
+    font-weight: 600;
+    line-height: 1.58688rem;
+  }
 }
 

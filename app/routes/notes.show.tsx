@@ -46,8 +46,8 @@ export const action = async ({ request }: ActionArgs) => {
   const authorization = session.data.token;
 
   if(data.intent === "delete") {
-    fetch("http://localhost:3333/posts/" + data.id, {
-    method: "DELETE",
+    fetch("http://localhost:3333/posts/trash/" + data.id, {
+    method: "PATCH",
     headers: {
       "Content-Type": "application/json",
       Authorization: "bearer " + authorization,
@@ -56,12 +56,17 @@ export const action = async ({ request }: ActionArgs) => {
   }
   
   if(data.intent !== "delete" && data.id) {
-    fetch("http://localhost:3333/posts/trash/" + data.id, {
+    fetch("http://localhost:3333/posts/" + data.id, {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",
         Authorization: "bearer " + authorization,
       },
+      body: JSON.stringify({
+        title: data.title,
+        content: data.content,
+        color: data.color,
+      }),
     }).then((response) => response.json())
   }
   
