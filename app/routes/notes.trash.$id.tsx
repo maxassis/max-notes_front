@@ -41,7 +41,16 @@ export async function loader({ request, params }: LoaderArgs) {
     const session = await getSession(request.headers.get("Cookie"));
     const authorization = session.data.token;
 
-    if(data.intent != "restore") {
+    if(data.restore === "restore") {
+      fetch(`http://localhost:3333/posts/restore/${data.id}`, {
+          method: "PATCH",
+          headers: {
+            Authorization: "bearer " + authorization,
+          }
+        }).then((response) => response.json())
+        //.then((r) => console.log(r))
+      } 
+      else {
       fetch(`http://localhost:3333/posts/clean/${data.intent}`, {
          method: "POST",
          headers: {
@@ -49,15 +58,8 @@ export async function loader({ request, params }: LoaderArgs) {
          }
        }).then((response) => response.json())
       // .then((response) => console.log(response))
-     }
-
-    fetch(`http://localhost:3333/posts/restore/${data.id}`, {
-        method: "PATCH",
-        headers: {
-          Authorization: "bearer " + authorization,
-        }
-      }).then((response) => response.json())
-      //.then((r) => console.log(r))
+      }
+   
 
     return null
   }
@@ -118,7 +120,7 @@ export default function Search() {
         <div className="restore-wrapper">
          <Form method="PATCH" name="delete">  
          <input type="hidden" name="id" value={cardData?.id} />
-          <input type="hidden" name="restore" value="delete" />         
+          <input type="hidden" name="restore" value="restore" />         
          <button className="modal__restore-button" onClick={() => modalRef.current?.close()}>  
          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20">
             <path fill="none" d="M0 0h24v24H0V0z"/>
