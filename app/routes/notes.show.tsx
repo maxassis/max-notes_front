@@ -29,9 +29,10 @@ export async function loader({ request }: LoaderArgs) {
 
   const res = await fetch("http://localhost:3333/posts", {
     headers: { Authorization: "bearer " + authorization },
-  });
+  })
+  .then((response) => response.json())
 
-  return res.json();
+  return res;
 }
 
 export const action = async ({ request }: ActionArgs) => {
@@ -53,6 +54,7 @@ export const action = async ({ request }: ActionArgs) => {
       Authorization: "bearer " + authorization,
     },
   }).then((response) => response.json())
+  .then(() => redirect("/notes/show"))
   }
   
   if(data.intent !== "delete" && data.id) {
@@ -68,6 +70,7 @@ export const action = async ({ request }: ActionArgs) => {
         color: data.color,
       }),
     }).then((response) => response.json())
+    .then(() => redirect("/notes/show"))
   }
   
   if(data.intent !== "delete" && !data.id) {
