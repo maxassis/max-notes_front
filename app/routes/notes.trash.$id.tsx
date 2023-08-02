@@ -41,16 +41,6 @@ export async function loader({ request, params }: LoaderArgs) {
     const session = await getSession(request.headers.get("Cookie"));
     const authorization = session.data.token;
   
-    if(data.intent != "restore") {
-     fetch(`http://localhost:3333/posts/clean/${data.intent}`, {
-        method: "POST",
-        headers: {
-          Authorization: "bearer " + authorization,
-        }
-      }).then((response) => response.json())
-     // .then((response) => console.log(response))
-    }
-
     fetch(`http://localhost:3333/posts/restore/${data.id}`, {
         method: "PATCH",
         headers: {
