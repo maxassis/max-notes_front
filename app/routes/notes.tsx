@@ -1,6 +1,6 @@
 import Side, { links as sideStyle } from "~/components/Side";
 import styles from "../styles/notes.css";
-import { Outlet, Form } from "@remix-run/react";
+import { Outlet, Form, useActionData } from "@remix-run/react";
 import type { LoaderArgs, ActionArgs } from "@remix-run/node";
 import { getSession } from "~/session.server";
 import { redirect } from "@remix-run/node";
@@ -40,28 +40,27 @@ export async function action({ request }: ActionArgs) {
   const data = Object.fromEntries(await request.formData());
   console.log(data);
   
-  
   if (!schema.safeParse(data).success) {
     console.log("deu ruim");
 
     return schema.safeParse(data);
   }
 
-  
-  return await data.content 
- // return redirect("/notes/search")
+  return redirect(`/notes/search/${data.content}`);
 }
 
 export default function Notes() {
   const [input, setInput] = useState<string>("")
+  const data = useActionData()
   
   return (
     <div className="notes">
       <header className="notes__header">
       <div className="header">
-            <Form method="POST" action={`/notes/search/${input}`} >
+            <Form method="POST">
                 <input value={input} onChange={(e) => setInput(e.target.value)} className="header__input" placeholder="Pesquisar" name="content" />
             </Form>
+            {data?.error ? <span className="header--error">campo obrigatorio</span> : null}
         </div>
       </header>
 

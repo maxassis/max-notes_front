@@ -7,6 +7,7 @@ import { getSession } from "~/session.server";
 import type { CardContent, CardProps } from "~/types";
 import Card from "~/components/Card"
 import Color from "../images/colors.svg"
+import { z } from "zod";
 
 
 export function links() {
@@ -20,7 +21,7 @@ export function links() {
     if (!session.data.token) {
       return redirect("/login"); 
     }
-  
+
     const res = await fetch(`http://localhost:3333/posts/${params.word}`, {
       method: "POST",
       headers: {

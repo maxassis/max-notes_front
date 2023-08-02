@@ -115,27 +115,18 @@ export default function Search() {
               <input type="hidden" name="id" value={cardData?.id} /> 
          </Form>
 
-         <Form method="PATCH" name="delete">        
-         <button className="modal__delete-button" onClick={() => modalRef.current?.close()}>
-          <input type="hidden" name="id" value={cardData?.id} />
-          <input type="hidden" name="restore" value="delete" />          
-            <svg                
-              xmlns="http://www.w3.org/2000/svg"
-              width="17.5"
-              height="17.5"
-              fill="none"
-              viewBox="0 0 24 24"
-            >
-              <path
-                stroke="#000"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                d="M10 12v5M14 12v5M4 7h16M6 10v8a3 3 0 0 0 3 3h6a3 3 0 0 0 3-3v-8M9 5a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v2H9V5Z"
-              />
-            </svg>
+        <div className="restore-wrapper">
+         <Form method="PATCH" name="delete">  
+         <input type="hidden" name="id" value={cardData?.id} />
+          <input type="hidden" name="restore" value="delete" />         
+         <button className="modal__restore-button" onClick={() => modalRef.current?.close()}>  
+         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20">
+            <path fill="none" d="M0 0h24v24H0V0z"/>
+            <path d="M17.65 6.35a7.95 7.95 0 0 0-6.48-2.31c-3.67.37-6.69 3.35-7.1 7.02C3.52 15.91 7.27 20 12 20a7.98 7.98 0 0 0 7.21-4.56c.32-.67-.16-1.44-.9-1.44-.37 0-.72.2-.88.53a5.994 5.994 0 0 1-6.8 3.31c-2.22-.49-4.01-2.3-4.48-4.52A6.002 6.002 0 0 1 12 6c1.66 0 3.14.69 4.22 1.78l-1.51 1.51c-.63.63-.19 1.71.7 1.71H19c.55 0 1-.45 1-1V6.41c0-.89-1.08-1.34-1.71-.71l-.64.65z"/>
+        </svg>    
         </button> 
-        </Form>              
+        </Form> 
+        </div>             
         
       </dialog>
 

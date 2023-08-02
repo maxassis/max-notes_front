@@ -33,7 +33,8 @@
     display: grid;
     align-items: center;
     background-color: #F5F5F5;
-    padding-inline-start: 50px;
+    padding-inline-start: 3.125rem;
+    position: relative;
 
     &__input {
         border-radius: 0.50206rem;
@@ -43,6 +44,17 @@
         max-inline-size: 37.5rem !important ;
         inline-size: 100% !important; 
         block-size: 3.125rem;
+
+        &:not(:placeholder-shown) {
+            outline: 1px solid blue;
+        }
     }
 
+    &--error {
+        position: absolute;
+        inset-block-end: 0.188rem;
+        inset-inline-start: 3.313rem;
+        color: red;
+        font-size: 0.813rem;
+    }
 }

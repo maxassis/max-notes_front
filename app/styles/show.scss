@@ -206,6 +206,16 @@
     inset-block-end: 10px;
     cursor: pointer;
   }
+
+  &__restore-button {
+    all: unset;
+    //position: absolute;
+   // inset-inline-end: 1rem;
+   // inset-block-end: 10px;
+    cursor: pointer;
+  }
+
+
 }
 
 :where(.show-search) {
@@ -230,5 +240,12 @@
     font-weight: 600;
     line-height: 1.58688rem;
   }
+}
+
+.restore-wrapper {
+  display: flex;
+  justify-content: flex-end;
+  padding-inline-end: 15px;
+  block-size: 30px;
 }
 
