@@ -48,6 +48,7 @@
     &__icon {
         display: none;
         margin-inline-end: 50px;
+        cursor: pointer;
 
         @media (max-width: 991px) {
             display: block;
@@ -94,10 +95,47 @@
         display: block !important;
     }
 
-
     &--error {
         color: red;
         font-size: 0.813rem;
+        display: block;
+    }
+}
+
+.menu-mobile {
+    position:fixed;
+    inline-size: 300px;
+    block-size: 100%;
+    z-index: 4;
+    display: none;
+    transform: translateX(-300px);
+    transition: transform 0.5s ease-in-out;
+    background: rgba(255, 255, 255, 0.2);
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+
+    &__wrapper {
+        position: fixed;
+        z-index: 3;
+        inline-size: 100%;
+        block-size: 100%;
+        background-color: transparent;
+        opacity: 1;
+        pointer-events: none;
+    }
+
+    &--show-wrapper {
+        display: block;
+        pointer-events: all;
+
+        .menu-mobile--show {
+            transform: translateX(0px) !important;
+        }
+    }
+
+    @media (max-width: 991px) {
         display: block;
     }
 }
