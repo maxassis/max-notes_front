@@ -102,6 +102,8 @@ export default function Show() {
   const textAreaCreateRef = useRef<HTMLTextAreaElement>(null)
   const [showColor, setShowColor] = useState<boolean>(false);
   const [selectedColor, setSelectedColor] = useState<string>("#fff");
+  const [blur, setBlur] = useState<string>("")
+
   const [cardData, setCardData] = useState<Omit<CardProps, "created">>({ color: "#fff", content: "", title: "", id: 0, deleted: "false" });
   const data = useLoaderData() as CardContent[]
   const navigation = useNavigation();
@@ -145,12 +147,14 @@ export default function Show() {
     textAreaCreateRef.current!.value = ""
     setSelectedColor("#fff")
     setShowColor(false)
+    setBlur("")
   }
+
 
   return (
     <>
       <div className="search">
-        <div className="search__box" style={{ backgroundColor: selectedColor, borderColor: (selectedColor === "#fff" ? "#d6d6d6" : selectedColor)}}>
+        <div className="search__box"  style={{ backgroundColor: selectedColor, borderColor: (selectedColor === "#fff" ? "#d6d6d6" : selectedColor)}}>
           <Form method="POST" name="create">
             <input
               className="search__input"
@@ -165,6 +169,7 @@ export default function Show() {
               placeholder="Crie uma nota..."
               name="content"
               ref={textAreaCreateRef}
+              onChange={(e) => setBlur(e.target.value)}
             ></textarea>
             <input type="hidden" name="color" value={selectedColor} />
             <input type="hidden" name="deleted" value={cardData?.deleted} />
@@ -376,7 +381,7 @@ export default function Show() {
         
       </dialog>
 
-      <div className="show" >
+      <div className={"show " + (blur !== "" ? "show--blur" : "")}>
         {data.map((item, index) => {
           return (
               <Card

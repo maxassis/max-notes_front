@@ -1,6 +1,6 @@
 import Side, { links as sideStyle } from "~/components/Side";
 import styles from "../styles/notes.css";
-import { Outlet, Form, useActionData } from "@remix-run/react";
+import { Outlet, Form, useActionData, Link } from "@remix-run/react";
 import type { LoaderArgs, ActionArgs } from "@remix-run/node";
 import { getSession } from "~/session.server";
 import { redirect } from "@remix-run/node";
@@ -60,9 +60,19 @@ export default function Notes() {
         <svg className="header__icon" xmlns="http://www.w3.org/2000/svg" width="30" height="30">
             <path d="M3 7a1 1 0 1 0 0 2h24a1 1 0 1 0 0-2H3zm0 7a1 1 0 1 0 0 2h24a1 1 0 1 0 0-2H3zm0 7a1 1 0 1 0 0 2h24a1 1 0 1 0 0-2H3z"/>
         </svg>
-        <Form method="POST" className="header__form">
+        <Form method="POST" className="header__form"> 
+          <div style={{position: "relative"}}> 
             <input value={input} onChange={(e) => setInput(e.target.value)} className="header__input" placeholder="Pesquisar" name="content" />
-            {data?.error ? <span className="header--error">campo obrigatorio</span> : null}
+            <Link to="/notes/show" 
+            className={"header__clear-icon " + (input !== "" ? "header--hidden-icon" : "")}
+            onClick={() => setInput("")}
+            >
+            <svg className="header__close-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24">
+              <path d="M4.99 3.99a1 1 0 0 0-.697 1.717L10.586 12l-6.293 6.293a1 1 0 1 0 1.414 1.414L12 13.414l6.293 6.293a1 1 0 1 0 1.414-1.414L13.414 12l6.293-6.293a1 1 0 0 0-.727-1.717 1 1 0 0 0-.687.303L12 10.586 5.707 4.293a1 1 0 0 0-.717-.303z"/>
+            </svg>
+            </Link>
+          </div>
+          {data?.error ? <span className="header--error">campo obrigatorio</span> : null}             
         </Form>
         </div>
       </header>

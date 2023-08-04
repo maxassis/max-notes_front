@@ -56,10 +56,17 @@
     }
 
     &__form {
-        display: contents;
+        display: grid;
+        max-inline-size: 31.25rem;
         inline-size: 100%;
     }
 
+    &__close-icon {
+        position: absolute;
+        inset-inline-end: 20px;
+        inset-block-start: 14px;
+        cursor: pointer;
+    }
 
     &__input {
         border-radius: 0.50206rem;
@@ -70,13 +77,23 @@
         block-size: 3.125rem;
 
         @media (max-width: 991px) {
-            inline-size: 70%;
+            inline-size: 100%;
         }
 
         &:not(:placeholder-shown) {
             outline: 1px solid blue;
         }   
     }
+
+    &__clear-icon {
+        display: none;
+        cursor: pointer;
+    }
+
+    &--hidden-icon {
+        display: block !important;
+    }
+
 
     &--error {
         color: red;
