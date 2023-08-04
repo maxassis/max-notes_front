@@ -35,12 +35,11 @@ export function links() {
   }
 
  export async function action({ request }: ActionArgs) { 
+  const session = await getSession(request.headers.get("Cookie"));
+  const authorization = session.data.token;
   const data = Object.fromEntries(await request.formData());
  // console.log(data);
   
-  const session = await getSession(request.headers.get("Cookie"));
-  const authorization = session.data.token;
-
   if(data.intent === "delete") {
     fetch("http://localhost:3333/posts/trash/" + data.id, {
     method: "PATCH",

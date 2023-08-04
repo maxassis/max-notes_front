@@ -23,10 +23,6 @@ export async function loader({ request }: LoaderArgs) {
   const session = await getSession(request.headers.get("Cookie"));
   const authorization = session.data.token;
 
-  if (!session.data.token) {
-    return redirect("/login");
-  }
-
   const res = await fetch("http://localhost:3333/posts", {
     headers: { Authorization: "bearer " + authorization },
   })

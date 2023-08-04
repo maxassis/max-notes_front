@@ -38,7 +38,7 @@ export async function loader({ request }: LoaderArgs) {
 
 export async function action({ request }: ActionArgs) {
   const data = Object.fromEntries(await request.formData());
-  console.log(data);
+  //console.log(data);
   
   if (!schema.safeParse(data).success) {
     console.log("deu ruim");

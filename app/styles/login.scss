@@ -2,13 +2,18 @@
     display: grid;
     place-items: center;
     block-size: 100dvh;
+    padding-inline: 20px;
 
     &__wrapper {
-        inline-size: min(100%, 33.62469rem);    
+        inline-size: min(100%, 33.62469rem);  
         border-radius: 1.625rem;
         border: 1px solid #D6D6D6;
         background: #FFF;
         padding: 3.93rem 2.52rem 2.34rem 2.52rem;
+
+        @media (max-width: 600px) {
+            padding: 3.93rem 1.52rem 2.34rem 1.52rem;
+        }
     }
 
     &__title {
@@ -66,7 +71,7 @@
     }
 
     &__button {
-        inline-size: 28.42413rem;
+        inline-size: min(100%, 28.42413rem);
         block-size: 4.12863rem;
         border-radius: 0.625rem;
         border: 1px solid #EAEAEA;

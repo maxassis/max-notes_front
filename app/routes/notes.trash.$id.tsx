@@ -1,7 +1,6 @@
 import { useState, useRef } from "react";
 import { links as showStyles } from "./notes.show";
 import type { LoaderArgs, ActionArgs } from "@remix-run/node";
-import { redirect } from "@remix-run/node";
 import { Form, useLoaderData, useMatches } from "@remix-run/react";
 import { getSession } from "~/session.server";
 import type { CardContent, CardProps } from "~/types";
@@ -16,11 +15,6 @@ export async function loader({ request, params }: LoaderArgs) {
     const authorization = session.data.token;
     //console.log(params);
     
-  
-    if (!session.data.token) {
-      return redirect("/login"); 
-    }
-  
     const res = await fetch(`http://localhost:3333/posts/trash/${params.id}`, {
       method: "GET",
       headers: {
