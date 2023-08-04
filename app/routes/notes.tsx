@@ -23,17 +23,15 @@ export async function loader({ request }: LoaderArgs) {
     return redirect("/login");
   }
 
-  const decode = (token: string): string =>
-    decodeURIComponent(
-        atob(token.split('.')[1].replace('-', '+').replace('_', '/'))
-            .split('')
-            .map((c) => `%${('00' + c.charCodeAt(0).toString(16)).slice(-2)}`)
-            .join('')
-    );
+return fetch("http://localhost:3333/auth/me", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: "bearer " + authorization,
+    }
+  }).then((response) => response.json())
+ // .then((data) => console.log(data))
 
-  //console.log(JSON.parse(decode(authorization)));
-
-  return JSON.parse(decode(authorization))
 }
 
 export async function action({ request }: ActionArgs) {
@@ -53,7 +51,7 @@ export default function Notes() {
   const [input, setInput] = useState<string>("")
   const [menu, setMenu] = useState<boolean>(false)
   const data = useActionData()
-  
+
   return (
     <div className="notes">
       <header className="notes__header">
