@@ -5,9 +5,11 @@
   position: absolute;
   inline-size: 100%;
   z-index: 1;
+  padding-inline: 0.625rem;
 
   &__box {
     inline-size: min(100%, 37.5rem);
+    margin-inline: 1.25rem;
     border-radius: 0.50206rem;
     border: 1px solid #d6d6d6;
     background: #fff;
@@ -133,6 +135,13 @@
   overflow-x: hidden;
   padding-block-end: 2.5rem;
   margin-block-start: 11.188rem;
+
+  @media (max-width: 650px) {
+    grid-template-columns: 1fr 1fr;
+    column-gap: 0.563rem;
+    padding-inline: 0.625rem;
+  }
+
 }
 
 .modal {
@@ -209,13 +218,8 @@
 
   &__restore-button {
     all: unset;
-    //position: absolute;
-   // inset-inline-end: 1rem;
-   // inset-block-end: 10px;
     cursor: pointer;
   }
-
-
 }
 
 :where(.show-search) {

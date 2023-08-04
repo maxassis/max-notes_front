@@ -57,10 +57,13 @@ export default function Notes() {
     <div className="notes">
       <header className="notes__header">
       <div className="header">
-            <Form method="POST">
-                <input value={input} onChange={(e) => setInput(e.target.value)} className="header__input" placeholder="Pesquisar" name="content" />
-            </Form>
+        <svg className="header__icon" xmlns="http://www.w3.org/2000/svg" width="30" height="30">
+            <path d="M3 7a1 1 0 1 0 0 2h24a1 1 0 1 0 0-2H3zm0 7a1 1 0 1 0 0 2h24a1 1 0 1 0 0-2H3zm0 7a1 1 0 1 0 0 2h24a1 1 0 1 0 0-2H3z"/>
+        </svg>
+        <Form method="POST" className="header__form">
+            <input value={input} onChange={(e) => setInput(e.target.value)} className="header__input" placeholder="Pesquisar" name="content" />
             {data?.error ? <span className="header--error">campo obrigatorio</span> : null}
+        </Form>
         </div>
       </header>
 

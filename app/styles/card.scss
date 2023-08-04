@@ -12,8 +12,12 @@
     background: #fff;
     cursor: pointer;
 
+    @media (max-width: 650px) {
+        inline-size: 100%;
+    }
+
     &__title {
-        max-inline-size: 230px;
+        max-inline-size: 14.375rem;
         color: #000;
         font-size: 1.09863rem;
         font-weight: 600;
