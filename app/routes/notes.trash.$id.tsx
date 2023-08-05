@@ -15,7 +15,7 @@ export async function loader({ request, params }: LoaderArgs) {
     const authorization = session.data.token;
     //console.log(params);
     
-    const res = await fetch(`http://localhost:3333/posts/trash/${params.id}`, {
+    const res = await fetch(`https://max-notes-api.onrender.com/posts/trash/${params.id}`, {
       method: "GET",
       headers: {
         Authorization: "bearer " + authorization,
@@ -36,7 +36,7 @@ export async function loader({ request, params }: LoaderArgs) {
     const authorization = session.data.token;
 
     if(data.restore === "restore") {
-      fetch(`http://localhost:3333/posts/restore/${data.id}`, {
+      fetch(`https://max-notes-api.onrender.com/posts/restore/${data.id}`, {
           method: "PATCH",
           headers: {
             Authorization: "bearer " + authorization,
@@ -45,7 +45,7 @@ export async function loader({ request, params }: LoaderArgs) {
         //.then((r) => console.log(r))
       } 
       else {
-      fetch(`http://localhost:3333/posts/clean/${data.intent}`, {
+      fetch(`https://max-notes-api.onrender.com/posts/clean/${data.intent}`, {
          method: "POST",
          headers: {
            Authorization: "bearer " + authorization,

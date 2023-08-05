@@ -22,7 +22,7 @@ export function links() {
       return redirect("/login"); 
     }
 
-    const res = await fetch(`http://localhost:3333/posts/${params.word}`, {
+    const res = await fetch(`https://max-notes-api.onrender.com/posts/${params.word}`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -41,7 +41,7 @@ export function links() {
  // console.log(data);
   
   if(data.intent === "delete") {
-    fetch("http://localhost:3333/posts/trash/" + data.id, {
+    fetch("https://max-notes-api.onrender.com/posts/trash/" + data.id, {
     method: "PATCH",
     headers: {
       "Content-Type": "application/json",
@@ -51,7 +51,7 @@ export function links() {
   }
   
   if(data.intent !== "delete" && data.id) {
-    fetch("http://localhost:3333/posts/" + data.id, {
+    fetch("https://max-notes-api.onrender.com/posts/" + data.id, {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",

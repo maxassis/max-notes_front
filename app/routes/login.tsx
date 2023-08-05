@@ -25,7 +25,7 @@ export async function action({ request }: ActionArgs) {
     return schema.safeParse(data);
   }
 
-  const token = fetch("http://localhost:3333/auth/login", {
+  const token = fetch("https://max-notes-api.onrender.com/auth/login", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({

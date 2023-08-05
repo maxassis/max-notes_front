@@ -27,7 +27,7 @@ const schema = z.object({
     }
    
    // console.log("deu bom");
-    const token = fetch("http://localhost:3333/auth/register", {  
+    const token = fetch("https://max-notes-api.onrender.com/auth/register", {  
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
