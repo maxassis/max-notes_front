@@ -9,6 +9,7 @@
 
     @media (max-width: 991px) {
         grid-template-columns: 0 1fr;
+        grid-template-rows: 4.375rem 1fr;
     }
 
     &__header {
@@ -103,13 +104,14 @@
 }
 
 .menu-mobile {
+    padding-block-start: 10px;
     position:fixed;
     inline-size: 300px;
-    block-size: 100%;
+    block-size: calc(100% - 4.375rem);
     z-index: 4;
     display: none;
     transform: translateX(-300px);
-    transition: transform 0.5s ease-in-out;
+    transition: transform 0.3s ease-in-out;
     background: rgba(255, 255, 255, 0.2);
     box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
     backdrop-filter: blur(5px);
@@ -136,6 +138,8 @@
     }
 
     @media (max-width: 991px) {
-        display: block;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
     }
 }
