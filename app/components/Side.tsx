@@ -42,7 +42,7 @@ export default function Side() {
                 <div className="side__single-item">
                <Link to={`/notes/trash/${sub}`}>     
                 <div className="side__icon-wrapper">    
-                        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="-3 0 32 32">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="-3 0 32 32">
                             <path fill="#000" fillRule="evenodd" d="M23 8H3a1 1 0 1 1 0-2h20a1 1 0 0 1 0 2Zm-1 20a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V10h18v18ZM10 3a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v1h-6V3Zm14 1h-6V2a2 2 0 0 0-2-2h-6a2 2 0 0 0-2 2v2H2a2 2 0 0 0-2 2v2a2 2 0 0 0 2 2v18a4 4 0 0 0 4 4h14a4 4 0 0 0 4-4V10a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2ZM13 28a1 1 0 0 0 1-1V15a1 1 0 0 0-2 0v12a1 1 0 0 0 1 1Zm-5 0a1 1 0 0 0 1-1V15a1 1 0 0 0-2 0v12a1 1 0 0 0 1 1Zm10 0a1 1 0 0 0 1-1V15a1 1 0 0 0-2 0v12a1 1 0 0 0 1 1Z"/>
                         </svg>
                         <span>Lixeira</span>
@@ -53,10 +53,12 @@ export default function Side() {
             <Link to="/logout" prefetch="intent">
                 <div className="side__logout">
                     <div className="side__icon-wrapper">    
-                        <svg  xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="-3 0 32 32">
-                            <path fill="#fff" fillRule="evenodd" d="M23 8H3a1 1 0 1 1 0-2h20a1 1 0 0 1 0 2Zm-1 20a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V10h18v18ZM10 3a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v1h-6V3Zm14 1h-6V2a2 2 0 0 0-2-2h-6a2 2 0 0 0-2 2v2H2a2 2 0 0 0-2 2v2a2 2 0 0 0 2 2v18a4 4 0 0 0 4 4h14a4 4 0 0 0 4-4V10a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2ZM13 28a1 1 0 0 0 1-1V15a1 1 0 0 0-2 0v12a1 1 0 0 0 1 1Zm-5 0a1 1 0 0 0 1-1V15a1 1 0 0 0-2 0v12a1 1 0 0 0 1 1Zm10 0a1 1 0 0 0 1-1V15a1 1 0 0 0-2 0v12a1 1 0 0 0 1 1Z"/>
-                        </svg>
-                        <span style={{color: '#fff'}} >Sair</span>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="icon icon-tabler icon-tabler-logout-2">
+                     <path stroke="none" d="M0 0h24v24H0z"/>
+                     <path d="M10 8V6a2 2 0 0 1 2-2h7a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2h-7a2 2 0 0 1-2-2v-2"/>
+                     <path d="M15 12H3l3-3M6 15l-3-3"/>
+                    </svg>    
+                    <span style={{color: '#fff'}} >Sair</span>
                     </div>
                 </div>
             </Link>    
