@@ -1,5 +1,5 @@
 import styles from "../styles/login.css";
-import { useActionData, Form, Link } from "@remix-run/react";
+import { useActionData, Form, Link, useNavigation } from "@remix-run/react";
 import type { ActionArgs } from "@remix-run/node";
 import { redirect } from "@remix-run/node";
 import { z } from "zod";
@@ -55,6 +55,8 @@ export async function action({ request }: ActionArgs) {
 
 export function ErrorBoundary() {
   const data = useActionData();
+  const navigation = useNavigation();
+  const isSubmitting = navigation.state === "submitting"
   
   return (
     <div className="login">
@@ -83,7 +85,7 @@ export function ErrorBoundary() {
           />
           {data?.error?.issues.some((item: any) => item.path.includes("password") ) ? <span className="login__error">A senha deve possuir no minimo 6 letras</span> : null}
           </div>
-          <button className="login__button">Continue</button>
+          <button className="login__button">{isSubmitting ? 'Aguarde...' : 'Continue'}</button>
         </Form>
 
         <Link to="/register">
@@ -98,7 +100,10 @@ export function ErrorBoundary() {
 
 export default function Login() {
   const data = useActionData();
- // console.log(data);
+  const navigation = useNavigation();
+  const isSubmitting = navigation.state === "submitting"
+
+
  
   return (
     <div className="login">
@@ -126,7 +131,7 @@ export default function Login() {
           />
           {data?.error?.issues.some((item: any) => item.path.includes("password") ) ? <span className="login__error">A senha deve possuir no minimo 6 letras</span> : null}
           </div>
-          <button className="login__button">Continue</button>
+          <button className="login__button">{isSubmitting ? 'Aguarde...' : 'Continue'}</button>
         </Form>
 
         <Link to="/register">

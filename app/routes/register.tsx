@@ -1,5 +1,5 @@
 import styles from "../styles/login.css";
-import { useActionData, Form, Link } from "@remix-run/react";
+import { useActionData, Form, Link, useNavigation } from "@remix-run/react";
 import { redirect } from "@remix-run/node";
 import type { ActionArgs } from "@remix-run/node";
 import { z } from "zod";
@@ -55,6 +55,8 @@ const schema = z.object({
 
   export function ErrorBoundary() {
     const data = useActionData();
+    const navigation = useNavigation();
+    const isSubmitting = navigation.state === "submitting"
    // console.log(data)
     
     return (
@@ -97,12 +99,11 @@ const schema = z.object({
           <div className="login__checkbox">
             <input type="checkbox" name="check" value="check" />
             <span>Aceito os termos e condições</span>
-            {/* {data?.error?.issues.some((item: any) => item.path.includes("check")) ? <span className="login__terms" >Marque a caixa</span> : null} */}
           </div>
           {data?.error?.issues.some((item: any) => item.path.includes("check")) ? <span className="login__terms" >Aceite os termos</span> : null}
 
           <button className="login__button" style={{ marginTop: "1.84rem" }}>
-            Continue
+            {isSubmitting ? 'Aguarde...' : 'Continue'}
           </button>
         </Form>
 
@@ -119,6 +120,8 @@ const schema = z.object({
 
 export default function Login() {
   const data = useActionData();
+  const navigation = useNavigation();
+  const isSubmitting = navigation.state === "submitting"
 
   return (
     <div className="login">
@@ -159,12 +162,11 @@ export default function Login() {
           <div className="login__checkbox">
             <input type="checkbox" name="check" value="check" />
             <span>Aceito os termos e condições</span>
-            {/* {data?.error?.issues.some((item: any) => item.path.includes("check")) ? <span className="login__terms" >Marque a caixa</span> : null} */}
           </div>
           {data?.error?.issues.some((item: any) => item.path.includes("check")) ? <span className="login__terms" >Aceite os termos</span> : null}
 
           <button className="login__button" style={{ marginTop: "1.84rem" }}>
-            Continue
+            {isSubmitting ? 'Aguarde...' : 'Continue'}
           </button>
         </Form>
 
