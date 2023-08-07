@@ -10,30 +10,29 @@ export function links() {
 }
 
 const schema = z.object({
-    name: z.string().nonempty(),
-    email: z.string().email(),
-    password: z.string().min(6).trim(),
+    name: z.string().nonempty().transform((name) => name.trim()),
+    email: z.string().email().transform((email) => email.toLowerCase().trim()),
+    password: z.string().min(6).transform((password) => password.trim()),
     check: z.string().nonempty(),
   });
 
   export async function action({ request }: ActionArgs) {
     const data = Object.fromEntries(await request.formData());
-    //console.log(data);
   
     if (!schema.safeParse(data).success) {
      // console.log("deu ruim");
-   
       return schema.safeParse(data);
     }
-   
-   // console.log("deu bom");
+
+    const dataParsed = schema.parse(data);
+  
     const token = fetch("https://max-notes-api.onrender.com/auth/register", {  
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-        name: data.name as string,
-        email: data.email as string,
-        password: data.password as string,
+        name: dataParsed.name,
+        email: dataParsed.email,
+        password: dataParsed.password,
       }),
     })
       .then((r) => r.json())

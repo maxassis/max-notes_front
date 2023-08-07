@@ -10,8 +10,8 @@ export function links() {
 }
 
 const schema = z.object({
-  email: z.string().email(),
-  password: z.string().min(6).trim(),
+  email: z.string().email().transform((email) => email.toLowerCase().trim()),
+  password: z.string().min(6).transform((password) => password.trim()),
 });
 
 
@@ -25,12 +25,14 @@ export async function action({ request }: ActionArgs) {
     return schema.safeParse(data);
   }
 
+  const dataParsed = schema.parse(data);
+
   const token = fetch("https://max-notes-api.onrender.com/auth/login", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
-      email: data.email,
-      password: data.password,
+      email: dataParsed.email,
+      password: dataParsed.password,
     }),
   })
     .then((r) => r.json())
