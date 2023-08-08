@@ -148,7 +148,6 @@
     column-gap: 0.563rem;
     padding-inline: 0.625rem;
   }
-
 }
 
 .modal {
@@ -229,13 +228,19 @@
   }
 }
 
-:where(.show-search) {
+.show-search {
   @extend .show;
   block-size: calc(100dvh - 86px);
   margin-block: 15px 20px !important;
+
+  &--error {
+    text-align: center; 
+    font-size: 1rem;
+    margin-block-start: 40px;
+  } 
 }
 
-:where(.show-trash) {
+.show-trash {
   @extend .show;
   block-size: calc(100dvh - 126px);
   margin-block: 15px 20px !important;

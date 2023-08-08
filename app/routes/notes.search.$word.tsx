@@ -216,6 +216,7 @@ export default function Search() {
         
       </dialog>
 
+      {!data.length ? <h1 className="show-search--error">Nenhuma nota encontrada.</h1> : (
       <div className="show-search" style={{"marginBlockStart": "40px"}} >
         {data?.map((item, index) => {
           return (
@@ -232,6 +233,7 @@ export default function Search() {
           );
         })}
       </div>
+      )}
       </>
     )
 }
