@@ -56,7 +56,7 @@ export async function action({ request }: ActionArgs) {
 export function ErrorBoundary() {
   const data = useActionData();
   const navigation = useNavigation();
-  const isSubmitting = navigation.state === "submitting"
+  const isSubmitting = navigation.state === "loading"
   
   return (
     <div className="login">

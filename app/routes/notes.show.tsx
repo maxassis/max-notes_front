@@ -8,6 +8,7 @@ import { getSession } from "~/session.server";
 import type { CardContent, CardProps } from "~/types";
 import { z } from "zod";
 import Color from "../images/colors.svg"
+import Loading from "~/components/Loading";
 
 export function links() {
   return [{ rel: "stylesheet", href: styles }, ...cardStyle()];
@@ -103,6 +104,7 @@ export default function Show() {
   const [cardData, setCardData] = useState<Omit<CardProps, "created">>({ color: "#fff", content: "", title: "", id: 0, deleted: "false" });
   const data = useLoaderData() as CardContent[]
   const navigation = useNavigation();
+  const isSubmitting = navigation.state === "loading"
   
 
   function openModal(dt: CardProps) {
@@ -377,6 +379,8 @@ export default function Show() {
         
       </dialog>
 
+
+      {isSubmitting ? <div className="loading"><Loading /></div> : (
       <div className={"show " + (blur !== "" ? "show--blur" : "")}>
         {data.map((item, index) => {
           return (
@@ -393,6 +397,7 @@ export default function Show() {
           );
         })}
       </div>
+    )}
     </>
   );
 }

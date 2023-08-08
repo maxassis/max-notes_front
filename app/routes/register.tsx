@@ -121,7 +121,7 @@ const schema = z.object({
 export default function Login() {
   const data = useActionData();
   const navigation = useNavigation();
-  const isSubmitting = navigation.state === "submitting"
+  const isSubmitting = navigation.state === "loading"
 
   return (
     <div className="login">

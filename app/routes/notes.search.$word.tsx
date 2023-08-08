@@ -2,13 +2,12 @@ import { useState, useRef } from "react";
 import { links as showStyles } from "./notes.show";
 import type { LoaderArgs, ActionArgs} from "@remix-run/node";
 import { redirect } from "@remix-run/node";
-import { Form, useLoaderData } from "@remix-run/react";
+import { Form, useLoaderData, useNavigation } from "@remix-run/react";
 import { getSession } from "~/session.server";
 import type { CardContent, CardProps } from "~/types";
 import Card from "~/components/Card"
 import Color from "../images/colors.svg"
-import { z } from "zod";
-
+import Loading from "~/components/Loading";
 
 export function links() {
   return [ ...showStyles() ];
@@ -75,6 +74,8 @@ export default function Search() {
     const textAreaEditRef = useRef<HTMLTextAreaElement>(null)
     const [cardData, setCardData] = useState<Omit<CardProps, "created">>({ color: "#fff", content: "", title: "", id: 0, deleted: "false" });
     const data = useLoaderData() as CardContent[]
+    const navigation = useNavigation();
+    const isSubmitting = navigation.state === "loading"
    // console.log(data);
     
    function openModal(dt: CardProps) {
@@ -216,7 +217,10 @@ export default function Search() {
         
       </dialog>
 
-      {!data.length ? <h1 className="show-search--error">Nenhuma nota encontrada.</h1> : (
+
+      {isSubmitting && !data.length ? <div className="loading"><Loading /></div> : null}              
+
+      {!data.length && !isSubmitting ? <h1 className="show-search--error">Nenhuma nota encontrada.</h1> : (
       <div className="show-search" style={{"marginBlockStart": "40px"}} >
         {data?.map((item, index) => {
           return (

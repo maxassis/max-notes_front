@@ -1,10 +1,11 @@
 import { useState, useRef } from "react";
 import { links as showStyles } from "./notes.show";
 import type { LoaderArgs, ActionArgs } from "@remix-run/node";
-import { Form, useLoaderData, useMatches } from "@remix-run/react";
+import { Form, useLoaderData, useMatches, useNavigation } from "@remix-run/react";
 import { getSession } from "~/session.server";
 import type { CardContent, CardProps } from "~/types";
 import Card from "~/components/Card"
+import Loading from "~/components/Loading";
 
 export function links() {
   return [ ...showStyles() ];
@@ -67,6 +68,8 @@ export default function Search() {
     const data = useLoaderData() as CardContent[]
     const route = useMatches()
     const id = route[1].data.sub;
+    const navigation = useNavigation();
+    const isSubmitting = navigation.state === "loading"
     
     
    function openModal(dt: CardProps) {
@@ -131,8 +134,10 @@ export default function Search() {
           <input type="hidden" name="intent" value={id} />
           <button>Esvaziar Lixeira</button>
         </Form>
-      </div>                
-      <div className="show-trash" style={{"marginBlockStart": "40px"}} >
+      </div> 
+
+      {isSubmitting ? <div className="loading"><Loading /></div> : (               
+      <div className="show-trash" style={{"marginBlockStart": "0px"}} >
         {data?.map((item, index) => {
           return (
               <Card
@@ -146,8 +151,9 @@ export default function Search() {
                 deleted={item.deleted}
               />
           );
-        })}
+        })}  
       </div>
-      </>
+    )} 
+    </>
     )
 }
