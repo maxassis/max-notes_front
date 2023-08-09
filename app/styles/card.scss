@@ -28,13 +28,17 @@
     }
 
     &__content {
+        inline-size: 100%;
+        block-size: 130px;
         color: #000;
-        font-size: 0.97656rem;
+        font-size: 0.875rem;
         font-weight: 400;
         line-height: 1.46481rem;
-        block-size: 130px;
         overflow: hidden;
-        
+        background-color: transparent;
+        border: 0;
+        outline: none;
+        resize: none;
     }  
     
     &__date {

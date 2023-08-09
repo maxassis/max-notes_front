@@ -20,7 +20,7 @@ export default function Card({ color, content, title, created, openModal, id, de
       style={{ "background": color }}  
     >
       <h2 className="card__title">{title}</h2>
-      <p className="card__content">{content}</p>
+      <textarea className="card__content" defaultValue={content}></textarea>
       <span className="card__date">{ date(created) }</span>
     </div>
   );
