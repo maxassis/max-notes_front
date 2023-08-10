@@ -6,9 +6,13 @@ export function links() {
 }
 
 function date(dt: string ): string {
-    let data = new Date(dt);
-    let dataFormatada = ((data.getDate() )) + "/" + ((data.getMonth() + 1)) + "/" + data.getFullYear();
-    return dataFormatada
+  return new Date(dt).toLocaleDateString('pt-br', {
+    year: 'numeric',
+    month: 'numeric',
+    day: 'numeric',
+    hour: 'numeric',
+    minute: 'numeric',
+  } ) + "h"
 }
 
 export default function Card({ color, content, title, created, openModal, id, deleted }: OpenModal) {
