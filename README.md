@@ -1,18 +1,19 @@
 # Max Notes
 
-Front-end do projeto Max Notes
+**Front-end do projeto Max Notes**
 
 Max Notes e um bloco de notas no estilo google keep, no qual as anotaçoes sao guardadas em cards estilo post-it.
 
 o backend da aplicação se encontra no repositorio: 
 https://github.com/maxassis/Max-notes-api
 
-
+<br>
 
 ## Tecnologias
 
-- Typescript, Sass, Zod e Remix.
+**Typescript, Sass, Zod e Remix.**
 
+<br>
 
 ### Instruçoes para executar o projeto
 
@@ -26,7 +27,11 @@ depois executar o localhost com: `npm run dev`
 npm run dev
 ```
 
-E necessario estar rodando o backend da aplicação para consumir os endpoints.
+**E necessario estar rodando o backend da aplicação para consumir os endpoints.**
+
+<br>
+
+
 
 ![](https://raw.githubusercontent.com/maxassis/max-notes_front/master/app/images/desk.png)
 
