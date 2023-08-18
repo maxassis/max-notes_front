@@ -24,7 +24,7 @@ export async function loader({ request }: LoaderArgs) {
   const session = await getSession(request.headers.get("Cookie"));
   const authorization = session.data.token;
 
-  const res = await fetch("https://max-notes-api.onrender.com/posts", {
+  const res = await fetch("http://localhost:3333/posts", {
     headers: { Authorization: "bearer " + authorization },
   })
   .then((response) => response.json())
@@ -44,7 +44,7 @@ export const action = async ({ request }: ActionArgs) => {
   const authorization = session.data.token;
 
   if(data.intent === "delete") {
-    fetch("https://max-notes-api.onrender.com/posts/trash/" + data.id, {
+    fetch("http://localhost:3333/posts/trash/" + data.id, {
     method: "PATCH",
     headers: {
       "Content-Type": "application/json",
@@ -55,7 +55,7 @@ export const action = async ({ request }: ActionArgs) => {
   }
   
   if(data.intent !== "delete" && data.id) {
-    fetch("https://max-notes-api.onrender.com/posts/" + data.id, {
+    fetch("http://localhost:3333/posts/" + data.id, {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",
@@ -71,7 +71,7 @@ export const action = async ({ request }: ActionArgs) => {
   }
   
   if(data.intent !== "delete" && !data.id) {
-  fetch("https://max-notes-api.onrender.com/posts/create", {
+  fetch("http://localhost:3333/posts/create", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",

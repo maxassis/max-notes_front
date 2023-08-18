@@ -25,6 +25,13 @@
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
+
+        @media (max-width: 650px) {
+            white-space: normal;
+            word-break: break-all;
+            display: block;
+            font-size: 1.0rem; 
+        }
     }
 
     &__content {

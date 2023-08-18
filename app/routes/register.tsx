@@ -26,7 +26,7 @@ const schema = z.object({
 
     const dataParsed = schema.parse(data);
   
-    const token = fetch("https://max-notes-api.onrender.com/auth/register", {  
+    const token = fetch("http://localhost:3333/auth/register", {  
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({

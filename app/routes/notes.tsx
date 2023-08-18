@@ -23,7 +23,7 @@ export async function loader({ request }: LoaderArgs) {
     return redirect("/login");
   }
 
-  return fetch("https://max-notes-api.onrender.com/auth/me", {
+  return fetch("http://localhost:3333/auth/me", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
