@@ -22,7 +22,7 @@ na raiz do projeto instalar as dependencias com:
 npm install
 ```
 
-depois executar o localhost com: `npm run dev`
+depois executar o localhost com: 
 ```
 npm run dev
 ```
